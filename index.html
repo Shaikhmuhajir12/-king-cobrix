@@ -26,7 +26,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .gold{color:var(--gold)}
 #app{height:100%;position:relative}
 
-/* ========== TOP BAR (feed only) ========== */
 .topbar{
   position:fixed;top:0;left:0;right:0;z-index:40;
   height:calc(52px + var(--safe-t));padding-top:var(--safe-t);
@@ -48,7 +47,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
   background:var(--pink);color:#fff;border-radius:20px;padding:7px 14px;font-size:13px;font-weight:700
 }
 
-/* ========== MAIN FEED (TikTok vertical) ========== */
 #feedScreen{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
 .reel{
   height:100%;width:100%;scroll-snap-align:start;position:relative;
@@ -79,7 +77,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
   font-size:12px;display:grid;place-items:center;font-weight:900
 }
 
-/* ========== BOTTOM NAV ========== */
 .bottom-nav{
   position:fixed;bottom:0;left:0;right:0;z-index:50;
   height:calc(56px + var(--safe-b));padding-bottom:var(--safe-b);
@@ -99,7 +96,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 }
 .bnav.create span{position:relative;z-index:1;font-size:26px;color:#fff;font-weight:300}
 
-/* ========== CREATE / CAMERA SCREEN ========== */
 #createScreen{
   position:fixed;inset:0;z-index:100;background:#000;
   display:none;flex-direction:column
@@ -111,9 +107,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 }
 #camVideo.back-cam{transform:none}
 #previewVideo{transform:none}
-.cam-filter-overlay{
-  position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.55
-}
 .cam-top{
   position:absolute;top:0;left:0;right:0;z-index:10;
   padding:calc(12px + var(--safe-t)) 14px 0;
@@ -137,9 +130,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   scrollbar-width:none
 }
 .effects-row::-webkit-scrollbar{display:none}
-.fx{
-  flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px
-}
+.fx{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px}
 .fx-circle{
   width:52px;height:52px;border-radius:50%;border:2px solid transparent;
   overflow:hidden;background:#222;display:grid;place-items:center;font-size:20px
@@ -169,12 +160,10 @@ button:disabled{opacity:.45;cursor:not-allowed}
   transition:border-radius .2s,transform .15s
 }
 .rec-btn.recording{border-radius:12px;transform:scale(.85)}
-.gallery-btn img,.gallery-btn video{width:100%;height:100%;object-fit:cover;border-radius:8px}
 .mode-tabs{display:flex;gap:20px;margin-top:4px}
 .mode-tab{font-size:13px;font-weight:700;color:#888;padding-bottom:4px}
 .mode-tab.active{color:#fff;border-bottom:2px solid #fff}
 
-/* ========== EDIT / PREVIEW AFTER RECORD ========== */
 #editScreen{
   position:fixed;inset:0;z-index:110;background:#000;
   display:none;flex-direction:column
@@ -194,6 +183,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .edit-tools{display:flex;justify-content:space-around;margin-bottom:14px}
 .etool{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:#aaa}
 .etool b{font-size:22px}
+.etool.active{color:var(--gold)}
 .caption-box{
   width:100%;background:#1a1a1a;border:1px solid #333;border-radius:12px;
   padding:12px;color:#fff;font-size:14px;resize:none;min-height:70px;margin-bottom:12px
@@ -205,8 +195,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .btn-primary{
   flex:1;padding:14px;border-radius:12px;background:var(--pink);font-weight:800;font-size:15px
 }
+.upload-progress{
+  height:4px;background:#333;border-radius:4px;margin-bottom:10px;overflow:hidden;display:none
+}
+.upload-progress i{display:block;height:100%;width:0;background:var(--pink);transition:width .2s}
 
-/* ========== OTHER PAGES (Discover, Profile, etc) ========== */
 #pageScreen{
   position:fixed;inset:0;z-index:60;background:#0a0a0a;
   display:none;flex-direction:column;overflow-y:auto;
@@ -221,9 +214,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .page-header h1{font-size:18px;font-weight:800;flex:1}
 .back-btn{width:36px;height:36px;border-radius:50%;background:#1a1a1a;display:grid;place-items:center}
 .page-body{padding:16px}
-.empty{
-  text-align:center;padding:48px 20px;color:#666
-}
+.empty{text-align:center;padding:48px 20px;color:#666}
 .empty .big{font-size:48px;margin-bottom:12px}
 .empty h3{color:#fff;margin-bottom:6px}
 .search-input{
@@ -235,7 +226,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .grid-item video,.grid-item img{width:100%;height:100%;object-fit:cover}
 .grid-item .views{position:absolute;bottom:6px;left:6px;font-size:11px;font-weight:700;text-shadow:0 1px 3px #000}
 
-/* Profile */
 .profile-cover{height:120px;background:linear-gradient(135deg,#2a1f0a,#0a0a0a)}
 .profile-info{padding:0 16px;margin-top:-40px}
 .profile-av{
@@ -254,7 +244,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
   background:#1a1a1a;border:1px solid #333;font-weight:700;font-size:14px
 }
 
-/* Modals */
 .modal-bg{
   position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);
   display:none;align-items:flex-end;justify-content:center
@@ -292,7 +281,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .comment-form input{flex:1;background:#0d0d0d;border:1px solid #333;border-radius:20px;padding:11px 14px}
 .comment-form button{width:42px;height:42px;border-radius:50%;background:var(--pink);display:grid;place-items:center;font-size:16px}
 
-/* Settings */
 .settings-row{
   display:flex;align-items:center;justify-content:space-between;
   padding:16px 0;border-bottom:1px solid #1f1f1f
@@ -301,8 +289,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .settings-row p{font-size:12px;color:#777;margin-top:3px}
 .lang-select{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:8px 12px;color:#fff}
 
-/* Filters CSS classes */
-.f-none{}
 .f-vintage{filter:sepia(.45) contrast(1.1) brightness(.95)}
 .f-cool{filter:saturate(1.2) hue-rotate(15deg) brightness(1.05)}
 .f-warm{filter:sepia(.25) saturate(1.3) brightness(1.05)}
@@ -313,6 +299,12 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .f-pink{filter:hue-rotate(-20deg) saturate(1.4) brightness(1.05)}
 .f-cyber{filter:hue-rotate(180deg) saturate(1.5) contrast(1.1)}
 
+.text-overlay{
+  position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);
+  font-size:28px;font-weight:900;color:#fff;text-shadow:0 2px 8px #000,0 0 4px #000;
+  pointer-events:none;text-align:center;max-width:90%;word-break:break-word;z-index:4
+}
+
 @media(min-width:768px){
   #feedScreen,.bottom-nav,#createScreen,#editScreen,#pageScreen{max-width:480px;margin:0 auto;left:0;right:0}
   .topbar{max-width:480px;left:50%;transform:translateX(-50%)}
@@ -321,10 +313,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </head>
 <body>
 <div id="app">
-  <!-- FEED -->
   <div id="feedScreen"></div>
 
-  <!-- TOP BAR -->
   <header class="topbar" id="topBar">
     <div class="brand"><div class="brand-mark">♛</div>KING <span>COBRIX</span></div>
     <div class="top-actions">
@@ -334,7 +324,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
     </div>
   </header>
 
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav" id="bottomNav">
     <button class="bnav active" data-page="home" onclick="goHome()"><b>⌂</b>Home</button>
     <button class="bnav" data-page="discover" onclick="openPage('discover')"><b>⌕</b>Discover</button>
@@ -343,11 +332,10 @@ button:disabled{opacity:.45;cursor:not-allowed}
     <button class="bnav" data-page="profile" onclick="openPage('profile')"><b>◉</b>Profile</button>
   </nav>
 
-  <!-- CREATE / CAMERA -->
+  <!-- CAMERA -->
   <div id="createScreen">
     <div class="cam-wrap">
       <video id="camVideo" autoplay playsinline muted></video>
-      <div class="cam-filter-overlay" id="camFilterOverlay"></div>
       <div class="cam-top">
         <button class="cam-btn" onclick="closeCreate()">✕</button>
         <div class="cam-timer" id="camTimer">00:00</div>
@@ -363,7 +351,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
         </div>
         <div class="record-row">
           <button class="side-btn" onclick="pickGallery()" title="Upload">
-            <div class="gallery-btn" id="galleryThumb" style="width:40px;height:40px;border-radius:8px;background:#333;overflow:hidden;display:grid;place-items:center;font-size:18px">🖼</div>
+            <div style="width:40px;height:40px;border-radius:8px;background:#333;display:grid;place-items:center;font-size:18px">🖼</div>
           </button>
           <div class="rec-btn-wrap">
             <div class="rec-ring" id="recRing"></div>
@@ -381,10 +369,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
     <input type="file" id="galleryInput" accept="video/*" class="hidden">
   </div>
 
-  <!-- EDIT AFTER RECORD -->
+  <!-- EDIT -->
   <div id="editScreen">
     <div class="edit-preview">
       <video id="previewVideo" playsinline loop></video>
+      <div id="textOverlay" class="text-overlay hidden"></div>
       <div class="edit-top">
         <button class="cam-btn" onclick="backToCamera()">✕</button>
         <button class="cam-btn" onclick="togglePreviewMute()" id="muteBtn">🔊</button>
@@ -392,23 +381,27 @@ button:disabled{opacity:.45;cursor:not-allowed}
     </div>
     <div class="edit-bottom">
       <div class="edit-tools">
-        <button class="etool" onclick="toast('Text stickers coming soon')"><b>T</b>Text</button>
-        <button class="etool" onclick="reopenFilters()"><b>✦</b>Filters</button>
-        <button class="etool" onclick="toast('Music library requires extra setup')"><b>♪</b>Sounds</button>
-        <button class="etool" onclick="toast('Effects coming soon')"><b>✨</b>Effects</button>
+        <button class="etool" id="toolText" onclick="toggleTextTool()"><b>T</b>Text</button>
+        <button class="etool" id="toolFilter" onclick="showEditFilters()"><b>✦</b>Filters</button>
+        <button class="etool" onclick="toast('Add your own music later via device')"><b>♪</b>Sounds</button>
+        <button class="etool" onclick="toast('More effects coming')"><b>✨</b>Effects</button>
         <button class="etool" onclick="toast('Voiceover coming soon')"><b>🎤</b>Voice</button>
       </div>
+      <div id="editFilterRow" class="effects-row hidden" style="margin-bottom:12px"></div>
+      <div id="textInputWrap" class="hidden" style="margin-bottom:10px">
+        <input id="textInput" maxlength="80" placeholder="Add text on video..." style="width:100%;background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:11px;color:#fff">
+      </div>
       <textarea class="caption-box" id="editCaption" maxlength="1500" placeholder="Write a caption... #KingCobrix"></textarea>
+      <div class="upload-progress" id="uploadProgress"><i id="uploadBar"></i></div>
       <div class="publish-row">
         <button class="btn-secondary" onclick="backToCamera()">Retake</button>
-        <button class="btn-primary" onclick="publishVideo()">Post</button>
+        <button class="btn-primary" id="postBtn" onclick="publishVideo()">Post</button>
       </div>
       <div class="error" id="editError"></div>
       <div class="success" id="editSuccess"></div>
     </div>
   </div>
 
-  <!-- GENERIC PAGE SCREEN -->
   <div id="pageScreen">
     <div class="page-header">
       <button class="back-btn" onclick="closePage()">←</button>
@@ -418,18 +411,16 @@ button:disabled{opacity:.45;cursor:not-allowed}
   </div>
 </div>
 
-<!-- AUTH MODAL -->
 <div class="modal-bg" id="authModal">
   <div class="modal">
     <div class="modal-head"><h2>♛ KING COBRIX</h2><button class="close-m" onclick="closeModal('authModal')">×</button></div>
-    <p class="muted" style="font-size:13px;line-height:1.6;margin-bottom:18px" data-i18n="authText">Sign in with Google to create, like and comment.</p>
+    <p class="muted" style="font-size:13px;line-height:1.6;margin-bottom:18px">Sign in with Google to create, like, comment and follow.</p>
     <button class="google-btn" id="googleLogin"><span class="g-letter">G</span> Continue with Google</button>
     <div class="error" id="authError"></div>
     <p class="muted" style="font-size:11px;margin-top:14px;line-height:1.5">By continuing you agree to use the platform respectfully.</p>
   </div>
 </div>
 
-<!-- PROFILE EDIT MODAL -->
 <div class="modal-bg" id="profileModal">
   <div class="modal">
     <div class="modal-head"><h2>Edit profile</h2><button class="close-m" onclick="closeModal('profileModal')">×</button></div>
@@ -444,7 +435,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
   </div>
 </div>
 
-<!-- COMMENTS MODAL -->
 <div class="modal-bg" id="commentModal">
   <div class="modal">
     <div class="modal-head"><h2>Comments</h2><button class="close-m" onclick="closeModal('commentModal')">×</button></div>
@@ -467,8 +457,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
-  getDocs, query, where, orderBy, limit, serverTimestamp, deleteDoc
+  getDocs, query, orderBy, limit, serverTimestamp, deleteDoc, increment
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getStorage, ref, uploadBytesResumable, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBnQsB-ZrUf53iaqRxIrJ1xpFdLK4hU-BA",
@@ -482,6 +475,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
@@ -494,8 +488,9 @@ let liked = new Set();
 let followed = new Set();
 let activeCommentVideo = null;
 let currentLang = localStorage.getItem("kc_language") || "en";
+let feedObserver = null;
 
-/* ===== CAMERA / RECORD STATE ===== */
+/* Camera / Record */
 let mediaStream = null;
 let mediaRecorder = null;
 let recordedChunks = [];
@@ -509,6 +504,7 @@ let currentFilter = "none";
 let recordedBlob = null;
 let recordedUrl = null;
 let flashOn = false;
+let overlayText = "";
 
 const FILTERS = [
   { id: "none", name: "Normal", cls: "" },
@@ -523,32 +519,34 @@ const FILTERS = [
   { id: "cyber", name: "Cyber", cls: "f-cyber" }
 ];
 
-const words = {
-  en: {
-    home: "Home", discover: "Discover", create: "Create", inbox: "Inbox", profile: "Profile",
-    signIn: "Sign in", authText: "Sign in with Google to create, like and comment.",
-    noVideos: "No videos yet", noVideosText: "Be the first to post or follow creators.",
-    uploadDone: "Video posted to your feed!", firestoreSaved: "Metadata saved. Full video hosting needs Storage setup.",
+function t(k){
+  const en = {
+    noVideos: "No videos yet", noVideosText: "Be the first to post!",
+    uploadDone: "Video posted!", uploading: "Uploading video…",
     signInFirst: "Please sign in first.", shareCopied: "Link copied!",
-    authFailed: "Sign-in failed. Check Firebase settings.", commentsFailed: "Could not load comments.",
-    saved: "Profile saved.", noComments: "No comments yet. Say something!",
-    guest: "Guest", notSigned: "Sign in to view your profile."
-  },
-  ur: {
-    home: "ہوم", discover: "دریافت", create: "بنائیں", inbox: "ان باکس", profile: "پروفائل",
-    signIn: "لاگ اِن", authText: "ویڈیو بنانے اور لائک کرنے کے لیے Google سے لاگ اِن کریں۔",
-    noVideos: "ابھی کوئی ویڈیو نہیں", noVideosText: "پہلی ویڈیو آپ پوسٹ کریں۔",
-    uploadDone: "ویڈیو آپ کی فیڈ میں شامل ہوگئی!", firestoreSaved: "معلومات محفوظ ہوگئیں۔",
+    authFailed: "Sign-in failed. Check Firebase Auth + authorized domains.",
+    commentsFailed: "Could not load comments. Check Firestore rules.",
+    saved: "Profile saved.", noComments: "No comments yet.",
+    notSigned: "Sign in to view your profile.",
+    likeFail: "Like could not sync. Check rules.",
+    followOk: "Following", unfollowOk: "Unfollowed"
+  };
+  const ur = {
+    noVideos: "ابھی کوئی ویڈیو نہیں", noVideosText: "پہلی ویڈیو آپ پوسٹ کریں!",
+    uploadDone: "ویڈیو پوسٹ ہوگئی!", uploading: "ویڈیو اپ لوڈ ہو رہی ہے…",
     signInFirst: "پہلے لاگ اِن کریں۔", shareCopied: "لنک کاپی ہوگیا!",
-    authFailed: "لاگ اِن نہیں ہوا۔", commentsFailed: "تبصرے لوڈ نہیں ہوئے۔",
+    authFailed: "لاگ اِن نہیں ہوا۔ Firebase سیٹنگز چیک کریں۔",
+    commentsFailed: "تبصرے لوڈ نہیں ہوئے۔",
     saved: "پروفائل محفوظ ہوگئی۔", noComments: "ابھی کوئی تبصرہ نہیں۔",
-    guest: "مہمان", notSigned: "پروفائل دیکھنے کے لیے لاگ اِن کریں۔"
-  }
-};
-function t(k){ return (words[currentLang]||words.en)[k] || words.en[k] || k; }
+    notSigned: "پروفائل کے لیے لاگ اِن کریں۔",
+    likeFail: "لائک سنک نہیں ہوا۔", followOk: "فالو ہو گیا", unfollowOk: "ان فالو"
+  };
+  return (currentLang === "ur" ? ur : en)[k] || en[k] || k;
+}
+
 function toast(msg){
   const el = $("toast"); el.textContent = msg; el.classList.add("show");
-  setTimeout(() => el.classList.remove("show"), 2600);
+  setTimeout(() => el.classList.remove("show"), 2800);
 }
 function esc(s=""){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 function fmt(n){ return Number(n||0).toLocaleString(); }
@@ -557,11 +555,15 @@ function showModal(id){ $(id).classList.add("show"); }
 window.closeModal = id => $(id).classList.remove("show");
 window.openAuth = () => showModal("authModal");
 
-function avatarHTML(p, size=42){
+function avatarHTML(p){
   const photo = p?.photoURL || p?.photo || "";
   const name = p?.displayName || p?.name || "K";
   if(photo) return `<img src="${esc(photo)}" alt="" referrerpolicy="no-referrer">`;
   return esc(name.slice(0,1).toUpperCase());
+}
+
+function getFilterClass(id){
+  return (FILTERS.find(f => f.id === id) || {}).cls || "";
 }
 
 /* ===== NAV ===== */
@@ -582,8 +584,8 @@ window.openPage = (page) => {
   $("pageTitle").textContent = titles[page] || page;
   if(page === "discover") renderDiscover();
   else if(page === "profile") renderProfile();
-  else if(page === "inbox") $("pageBody").innerHTML = `<div class="empty"><div class="big">▤</div><h3>Inbox</h3><p>Messaging will appear here soon.</p></div>`;
-  else if(page === "notifications") $("pageBody").innerHTML = `<div class="empty"><div class="big">♡</div><h3>Notifications</h3><p>Activity will show up here.</p></div>`;
+  else if(page === "inbox") $("pageBody").innerHTML = `<div class="empty"><div class="big">▤</div><h3>Inbox</h3><p>Direct messages coming soon.</p></div>`;
+  else if(page === "notifications") $("pageBody").innerHTML = `<div class="empty"><div class="big">♡</div><h3>Notifications</h3><p>Likes, comments & follows will appear here.</p></div>`;
   else if(page === "settings") renderSettings();
 };
 window.closePage = () => {
@@ -595,6 +597,8 @@ window.closePage = () => {
 /* ===== FEED ===== */
 function renderFeed(){
   const root = $("feedScreen");
+  if(feedObserver){ feedObserver.disconnect(); feedObserver = null; }
+
   const videos = [...localVideos, ...allVideos];
   if(!videos.length){
     root.innerHTML = `<div class="reel" style="flex-direction:column;gap:12px;color:#666">
@@ -605,11 +609,14 @@ function renderFeed(){
     </div>`;
     return;
   }
+
   root.innerHTML = videos.map(v => {
     const isLiked = liked.has(v.id);
     const src = v.localUrl || v.videoUrl || "";
+    const fcls = v.filterClass || getFilterClass(v.filter) || "";
     return `<div class="reel" data-id="${esc(v.id)}">
-      <video src="${esc(src)}" playsinline loop preload="metadata" data-vid="${esc(v.id)}" ${v.filterClass ? `class="${v.filterClass}"` : ""}></video>
+      <video src="${esc(src)}" playsinline loop preload="metadata" data-vid="${esc(v.id)}" class="${fcls}"></video>
+      ${v.overlayText ? `<div class="text-overlay">${esc(v.overlayText)}</div>` : ""}
       <div class="reel-overlay"><div class="reel-gradient"></div></div>
       <div class="reel-info">
         <div class="name">@${esc(v.username || "creator")}</div>
@@ -623,11 +630,11 @@ function renderFeed(){
         </button>
         <button class="act ${isLiked?"liked":""}" onclick="toggleLike('${esc(v.id)}')">
           <span class="sym">${isLiked?"♥":"♡"}</span>
-          <span class="cnt">${fmt((v.likesCount||0)+(isLiked?1:0))}</span>
+          <span class="cnt">${fmt(v.likesCount || 0)}</span>
         </button>
         <button class="act" onclick="openComments('${esc(v.id)}')">
           <span class="sym">💬</span>
-          <span class="cnt">${fmt(v.commentsCount||0)}</span>
+          <span class="cnt">${fmt(v.commentsCount || 0)}</span>
         </button>
         <button class="act" onclick="shareVideo('${esc(v.id)}')">
           <span class="sym">↗</span>
@@ -637,22 +644,21 @@ function renderFeed(){
     </div>`;
   }).join("");
 
-  // Auto-play visible video
-  const observer = new IntersectionObserver((entries) => {
+  feedObserver = new IntersectionObserver((entries) => {
     entries.forEach(en => {
       const vid = en.target.querySelector("video");
       if(!vid) return;
-      if(en.isIntersecting && en.intersectionRatio > 0.6){
-        document.querySelectorAll("#feedScreen video").forEach(v => { if(v !== vid) v.pause(); });
-        vid.play().catch(()=>{});
+      if(en.isIntersecting && en.intersectionRatio > 0.55){
+        document.querySelectorAll("#feedScreen video").forEach(v => { if(v !== vid){ v.pause(); v.currentTime = 0; } });
+        vid.muted = false;
+        vid.play().catch(() => { vid.muted = true; vid.play().catch(()=>{}); });
       } else {
         vid.pause();
       }
     });
-  }, { threshold: 0.6 });
-  root.querySelectorAll(".reel").forEach(r => observer.observe(r));
+  }, { threshold: [0.55, 0.7] });
 
-  // Tap to play/pause
+  root.querySelectorAll(".reel").forEach(r => feedObserver.observe(r));
   root.querySelectorAll("video").forEach(v => {
     v.addEventListener("click", () => {
       if(v.paused) v.play().catch(()=>{}); else v.pause();
@@ -660,13 +666,13 @@ function renderFeed(){
   });
 }
 
-/* ===== CREATE / CAMERA ===== */
+/* ===== CAMERA ===== */
 window.openCreate = async () => {
   if(!signedIn()) return;
   $("createScreen").classList.add("show");
   $("topBar").style.display = "none";
   $("bottomNav").style.display = "none";
-  buildEffects();
+  buildEffects($("effectsRow"), true);
   await startCamera();
 };
 
@@ -675,13 +681,14 @@ function closeCreate(){
   $("createScreen").classList.remove("show");
   $("topBar").style.display = "";
   $("bottomNav").style.display = "";
-  if(isRecording) stopRecord();
+  if(isRecording) stopRecord(true);
 }
 
 function closeEdit(){
   $("editScreen").classList.remove("show");
-  if(recordedUrl){ URL.revokeObjectURL(recordedUrl); recordedUrl = null; }
-  recordedBlob = null;
+  if(recordedUrl && recordedUrl.startsWith("blob:")){
+    // keep until published or retake
+  }
 }
 
 async function startCamera(){
@@ -694,9 +701,9 @@ async function startCamera(){
     const v = $("camVideo");
     v.srcObject = mediaStream;
     v.classList.toggle("back-cam", facingMode === "environment");
-    applyFilterToCam();
+    applyFilterToVideo(v);
   }catch(err){
-    toast("Camera permission needed. " + (err.message || ""));
+    toast("Camera permission required: " + (err.message || ""));
     console.error(err);
   }
 }
@@ -718,38 +725,44 @@ window.toggleFlash = async () => {
   if(!mediaStream) return;
   const track = mediaStream.getVideoTracks()[0];
   const caps = track.getCapabilities?.() || {};
-  if(!caps.torch){ toast("Flash not supported on this device"); return; }
+  if(!caps.torch){ toast("Flash not supported on this camera"); return; }
   flashOn = !flashOn;
   try{
     await track.applyConstraints({ advanced: [{ torch: flashOn }] });
     $("flashBtn").style.color = flashOn ? "var(--gold)" : "";
-  }catch(e){ toast("Could not toggle flash"); }
+  }catch{ toast("Could not toggle flash"); }
 };
 
-function buildEffects(){
-  const row = $("effectsRow");
+function buildEffects(row, forCam){
+  if(!row) return;
   row.innerHTML = FILTERS.map(f => `
-    <button class="fx ${currentFilter===f.id?"active":""}" data-f="${f.id}" onclick="selectFilter('${f.id}')">
-      <div class="fx-circle ${f.cls}" style="background:linear-gradient(135deg,#333,#111)">${f.id==="none"?"◎":"✦"}</div>
+    <button class="fx ${currentFilter===f.id?"active":""}" data-f="${f.id}" onclick="selectFilter('${f.id}', ${forCam})">
+      <div class="fx-circle ${f.cls}" style="background:linear-gradient(135deg,#444,#1a1a1a)">${f.id==="none"?"◎":"✦"}</div>
       <span>${f.name}</span>
     </button>
   `).join("");
 }
-window.selectFilter = (id) => {
+window.selectFilter = (id, forCam) => {
   currentFilter = id;
-  buildEffects();
-  applyFilterToCam();
+  if(forCam){
+    buildEffects($("effectsRow"), true);
+    applyFilterToVideo($("camVideo"));
+  } else {
+    buildEffects($("editFilterRow"), false);
+    applyFilterToVideo($("previewVideo"));
+  }
 };
-function applyFilterToCam(){
-  const v = $("camVideo");
-  FILTERS.forEach(f => v.classList.remove(f.cls));
+function applyFilterToVideo(el){
+  if(!el) return;
+  FILTERS.forEach(f => { if(f.cls) el.classList.remove(f.cls); });
   const f = FILTERS.find(x => x.id === currentFilter);
-  if(f && f.cls) v.classList.add(f.cls);
+  if(f && f.cls) el.classList.add(f.cls);
 }
 
 window.setSpeed = (s) => {
   currentSpeed = s;
   document.querySelectorAll(".spd").forEach(b => b.classList.toggle("active", Number(b.dataset.speed) === s));
+  // Note: true variable-speed recording needs canvas processing; we store preferred speed for playback hint
 };
 window.setMaxDuration = (sec) => {
   maxDuration = sec;
@@ -760,38 +773,45 @@ window.setMaxDuration = (sec) => {
 };
 
 window.toggleRecord = () => {
-  if(isRecording) stopRecord();
+  if(isRecording) stopRecord(false);
   else startRecord();
 };
 
 function startRecord(){
   if(!mediaStream){ toast("Camera not ready"); return; }
   recordedChunks = [];
-  const options = { mimeType: "video/webm;codecs=vp9,opus" };
-  if(!MediaRecorder.isTypeSupported(options.mimeType)){
-    options.mimeType = "video/webm";
-  }
+  let mime = "video/webm;codecs=vp9,opus";
+  if(!MediaRecorder.isTypeSupported(mime)) mime = "video/webm;codecs=vp8,opus";
+  if(!MediaRecorder.isTypeSupported(mime)) mime = "video/webm";
+  if(!MediaRecorder.isTypeSupported(mime)) mime = "";
+
   try{
-    mediaRecorder = new MediaRecorder(mediaStream, options);
+    mediaRecorder = mime ? new MediaRecorder(mediaStream, { mimeType: mime }) : new MediaRecorder(mediaStream);
   }catch(e){
     mediaRecorder = new MediaRecorder(mediaStream);
   }
-  mediaRecorder.ondataavailable = e => { if(e.data.size > 0) recordedChunks.push(e.data); };
+
+  mediaRecorder.ondataavailable = e => { if(e.data && e.data.size > 0) recordedChunks.push(e.data); };
   mediaRecorder.onstop = () => {
-    recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+    if(recordedChunks.length === 0){ toast("Recording failed — try again"); return; }
+    const type = mediaRecorder.mimeType || "video/webm";
+    recordedBlob = new Blob(recordedChunks, { type });
     recordedUrl = URL.createObjectURL(recordedBlob);
     openEditScreen();
   };
-  mediaRecorder.start(100);
+  mediaRecorder.start(200);
   isRecording = true;
   recordStart = Date.now();
   $("recBtn").classList.add("recording");
   updateTimer();
-  recordTimer = setInterval(updateTimer, 100);
+  recordTimer = setInterval(updateTimer, 80);
 }
 
-function stopRecord(){
-  if(mediaRecorder && mediaRecorder.state !== "inactive") mediaRecorder.stop();
+function stopRecord(cancel){
+  if(mediaRecorder && mediaRecorder.state !== "inactive"){
+    if(cancel) mediaRecorder.onstop = null;
+    mediaRecorder.stop();
+  }
   isRecording = false;
   clearInterval(recordTimer);
   $("recBtn").classList.remove("recording");
@@ -806,17 +826,18 @@ function updateTimer(){
   $("camTimer").textContent = `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
   const pct = Math.min(100, (elapsed / maxDuration) * 100);
   $("recRing").style.setProperty("--p", pct + "%");
-  if(elapsed >= maxDuration) stopRecord();
+  if(elapsed >= maxDuration) stopRecord(false);
 }
 
 window.pickGallery = () => $("galleryInput").click();
 $("galleryInput").onchange = (e) => {
   const file = e.target.files?.[0];
-  if(!file || !file.type.startsWith("video/")){ toast("Please select a video"); return; }
-  if(file.size > 100*1024*1024){ toast("Video must be under 100 MB"); return; }
+  if(!file || !file.type.startsWith("video/")){ toast("Select a video file"); return; }
+  if(file.size > 120 * 1024 * 1024){ toast("Max 120 MB"); return; }
   recordedBlob = file;
   recordedUrl = URL.createObjectURL(file);
   openEditScreen();
+  e.target.value = "";
 };
 
 function openEditScreen(){
@@ -825,16 +846,29 @@ function openEditScreen(){
   $("editScreen").classList.add("show");
   const pv = $("previewVideo");
   pv.src = recordedUrl;
-  pv.className = "";
-  const f = FILTERS.find(x => x.id === currentFilter);
-  if(f && f.cls) pv.classList.add(f.cls);
+  applyFilterToVideo(pv);
+  pv.muted = false;
   pv.play().catch(()=>{});
   $("editCaption").value = "";
   $("editError").textContent = "";
   $("editSuccess").textContent = "";
+  $("uploadProgress").style.display = "none";
+  $("uploadBar").style.width = "0%";
+  $("postBtn").disabled = false;
+  overlayText = "";
+  $("textOverlay").classList.add("hidden");
+  $("textOverlay").textContent = "";
+  $("textInput").value = "";
+  $("textInputWrap").classList.add("hidden");
+  $("editFilterRow").classList.add("hidden");
+  $("toolText").classList.remove("active");
+  $("toolFilter").classList.remove("active");
 }
 
 window.backToCamera = () => {
+  if(recordedUrl && recordedUrl.startsWith("blob:")) URL.revokeObjectURL(recordedUrl);
+  recordedBlob = null;
+  recordedUrl = null;
   closeEdit();
   $("createScreen").classList.add("show");
   startCamera();
@@ -846,28 +880,61 @@ window.togglePreviewMute = () => {
   $("muteBtn").textContent = v.muted ? "🔇" : "🔊";
 };
 
-window.reopenFilters = () => {
-  toast("Filter already applied. Retake to change.");
+window.toggleTextTool = () => {
+  const wrap = $("textInputWrap");
+  const tool = $("toolText");
+  const show = wrap.classList.contains("hidden");
+  wrap.classList.toggle("hidden", !show);
+  tool.classList.toggle("active", show);
+  if(show) $("textInput").focus();
+};
+$("textInput").oninput = () => {
+  overlayText = $("textInput").value.trim();
+  const el = $("textOverlay");
+  if(overlayText){
+    el.textContent = overlayText;
+    el.classList.remove("hidden");
+  } else {
+    el.classList.add("hidden");
+  }
 };
 
+window.showEditFilters = () => {
+  const row = $("editFilterRow");
+  const show = row.classList.contains("hidden");
+  row.classList.toggle("hidden", !show);
+  $("toolFilter").classList.toggle("active", show);
+  if(show) buildEffects(row, false);
+};
+
+/* ===== PUBLISH (Storage + Firestore) ===== */
 window.publishVideo = async () => {
   if(!signedIn()) return;
   const caption = $("editCaption").value.trim();
   if(!caption){ $("editError").textContent = "Please write a caption."; return; }
-  if(!recordedBlob){ $("editError").textContent = "No video recorded."; return; }
+  if(!recordedBlob){ $("editError").textContent = "No video."; return; }
+
   $("editError").textContent = "";
+  $("postBtn").disabled = true;
+  $("uploadProgress").style.display = "block";
+  $("editSuccess").textContent = t("uploading");
 
   const p = myProfile || {};
-  const filterCls = (FILTERS.find(x => x.id === currentFilter) || {}).cls || "";
+  const filterCls = getFilterClass(currentFilter);
+  const localId = "local_" + Date.now();
+
+  // Optimistic local preview
   const localVideo = {
-    id: "local_" + Date.now(),
+    id: localId,
     userId: currentUser.uid,
     displayName: p.displayName || currentUser.displayName || "Creator",
     username: p.username || "creator",
     photoURL: p.photoURL || currentUser.photoURL || "",
     caption,
     localUrl: recordedUrl,
+    filter: currentFilter,
     filterClass: filterCls,
+    overlayText: overlayText || "",
     createdAt: Date.now(),
     likesCount: 0,
     commentsCount: 0
@@ -875,28 +942,86 @@ window.publishVideo = async () => {
   localVideos.unshift(localVideo);
 
   try{
-    await addDoc(collection(db, "videos"), {
+    // 1) Upload to Firebase Storage
+    const ext = (recordedBlob.type || "").includes("mp4") ? "mp4" : "webm";
+    const path = `videos/${currentUser.uid}/${Date.now()}.${ext}`;
+    const storageRef = ref(storage, path);
+    const task = uploadBytesResumable(storageRef, recordedBlob, {
+      contentType: recordedBlob.type || "video/webm",
+      customMetadata: { uploadedBy: currentUser.uid, caption: caption.slice(0,100) }
+    });
+
+    const videoUrl = await new Promise((resolve, reject) => {
+      task.on("state_changed",
+        (snap) => {
+          const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+          $("uploadBar").style.width = pct + "%";
+        },
+        (err) => reject(err),
+        async () => {
+          try{
+            const url = await getDownloadURL(task.snapshot.ref);
+            resolve(url);
+          }catch(e){ reject(e); }
+        }
+      );
+    });
+
+    // 2) Save metadata to Firestore
+    const docRef = await addDoc(collection(db, "videos"), {
       userId: currentUser.uid,
       displayName: localVideo.displayName,
       username: localVideo.username,
       photoURL: localVideo.photoURL,
       caption,
-      videoUrl: "",
+      videoUrl,
       filter: currentFilter,
+      overlayText: overlayText || "",
       likesCount: 0,
       commentsCount: 0,
-      createdAt: serverTimestamp(),
-      hostingStatus: "not_configured"
+      storagePath: path,
+      createdAt: serverTimestamp()
     });
-    $("editSuccess").textContent = t("firestoreSaved");
-  }catch(err){
-    console.warn(err);
+
+    // Update local entry with real id + url
+    const idx = localVideos.findIndex(v => v.id === localId);
+    if(idx >= 0){
+      localVideos[idx] = {
+        ...localVideos[idx],
+        id: docRef.id,
+        videoUrl,
+        localUrl: null
+      };
+    }
+
+    // Update user posts count
+    try{
+      await updateDoc(doc(db, "users", currentUser.uid), {
+        postsCount: increment(1),
+        updatedAt: serverTimestamp()
+      });
+    }catch(_){}
+
     $("editSuccess").textContent = t("uploadDone");
+    toast(t("uploadDone"));
+    setTimeout(() => {
+      closeEdit();
+      closeCreate();
+      goHome();
+    }, 600);
+
+  }catch(err){
+    console.error("Publish error:", err);
+    $("editError").textContent = "Upload failed: " + (err.message || "Check Storage rules & Auth");
+    $("postBtn").disabled = false;
+    // keep local preview so user still sees their video
+    toast("Saved locally. Cloud upload failed — check Firebase Storage rules.");
+    setTimeout(() => {
+      closeEdit();
+      closeCreate();
+      goHome();
+    }, 1200);
   }
-  toast(t("uploadDone"));
-  closeEdit();
-  closeCreate();
-  goHome();
 };
 
 /* ===== PROFILE / DISCOVER / SETTINGS ===== */
@@ -904,11 +1029,11 @@ function renderDiscover(){
   const videos = [...localVideos, ...allVideos];
   $("pageBody").innerHTML = `
     <input class="search-input" id="searchQ" placeholder="Search creators or captions...">
-    <div id="searchRes" class="grid">${videos.map(v => `
+    <div id="searchRes" class="grid">${videos.length ? videos.map(v => `
       <div class="grid-item" onclick="goHome()">
-        <video src="${esc(v.localUrl||v.videoUrl)}" muted playsinline preload="metadata"></video>
+        <video src="${esc(v.localUrl||v.videoUrl)}" muted playsinline preload="metadata" class="${v.filterClass||getFilterClass(v.filter)||""}"></video>
         <span class="views">▶ ${fmt(v.likesCount||0)}</span>
-      </div>`).join("") || `<div class="empty" style="grid-column:1/-1"><div class="big">⌕</div><h3>No videos</h3></div>`}
+      </div>`).join("") : `<div class="empty" style="grid-column:1/-1"><div class="big">⌕</div><h3>No videos</h3></div>`}
     </div>`;
   $("searchQ").oninput = () => {
     const q = $("searchQ").value.trim().toLowerCase();
@@ -917,11 +1042,11 @@ function renderDiscover(){
       (v.username||"").toLowerCase().includes(q) ||
       (v.displayName||"").toLowerCase().includes(q)
     );
-    $("searchRes").innerHTML = filtered.map(v => `
+    $("searchRes").innerHTML = filtered.length ? filtered.map(v => `
       <div class="grid-item" onclick="goHome()">
         <video src="${esc(v.localUrl||v.videoUrl)}" muted playsinline preload="metadata"></video>
         <span class="views">▶ ${fmt(v.likesCount||0)}</span>
-      </div>`).join("") || `<div class="empty" style="grid-column:1/-1"><div class="big">⌕</div><h3>No results</h3></div>`;
+      </div>`).join("") : `<div class="empty" style="grid-column:1/-1"><div class="big">⌕</div><h3>No results</h3></div>`;
   };
 }
 
@@ -946,13 +1071,13 @@ function renderProfile(){
         <div><strong>${fmt(p.followingCount||0)}</strong><span>Following</span></div>
       </div>
       <button class="edit-prof-btn" onclick="openEditProfile()">Edit profile</button>
-      <button class="edit-prof-btn" style="margin-top:8px" onclick="openPage('settings')">Settings</button>
+      <button class="edit-prof-btn" style="margin-top:8px" onclick="openPage('settings')">Settings & Language</button>
     </div>
-    <div class="grid" style="margin-top:20px">${myVids.map(v => `
+    <div class="grid" style="margin-top:20px">${myVids.length ? myVids.map(v => `
       <div class="grid-item">
-        <video src="${esc(v.localUrl||v.videoUrl)}" muted playsinline preload="metadata"></video>
+        <video src="${esc(v.localUrl||v.videoUrl)}" muted playsinline preload="metadata" class="${v.filterClass||getFilterClass(v.filter)||""}"></video>
         <span class="views">▶ ${fmt(v.likesCount||0)}</span>
-      </div>`).join("") || `<div class="empty" style="grid-column:1/-1"><div class="big">🎥</div><h3>No videos yet</h3><button class="round-btn" style="margin-top:10px" onclick="openCreate()">Create</button></div>`}
+      </div>`).join("") : `<div class="empty" style="grid-column:1/-1"><div class="big">🎥</div><h3>No videos yet</h3><button class="round-btn" style="margin-top:10px" onclick="openCreate()">Create</button></div>`}
     </div>`;
 }
 
@@ -970,11 +1095,11 @@ function renderSettings(){
       ${currentUser ? `<button class="btn-secondary" style="width:auto;padding:8px 14px;color:#ff6b8a" onclick="logout()">Sign out</button>` : `<button class="round-btn" onclick="openAuth()">Sign in</button>`}
     </div>
     <div class="settings-row"><div><strong>Privacy</strong><p>Never share private info publicly</p></div><span>🔒</span></div>
-    <div class="settings-row"><div><strong>Version</strong><p>KING COBRIX · 2.0 TikTok-style</p></div><span class="gold">2.0</span></div>`;
+    <div class="settings-row"><div><strong>Version</strong><p>KING COBRIX · 2.1 Full features</p></div><span class="gold">2.1</span></div>`;
   $("langSel").onchange = () => {
     currentLang = $("langSel").value;
     localStorage.setItem("kc_language", currentLang);
-    toast("Language updated");
+    toast(currentLang === "ur" ? "زبان تبدیل ہوگئی" : "Language updated");
   };
 }
 
@@ -1013,31 +1138,71 @@ $("editProfileForm").onsubmit = async (e) => {
   }
 };
 
-/* ===== ACTIONS ===== */
+/* ===== LIKES / FOLLOW / COMMENTS / SHARE ===== */
 window.toggleLike = async (id) => {
   if(!signedIn()) return;
   const was = liked.has(id);
   if(was) liked.delete(id); else liked.add(id);
+
+  // Optimistic UI
+  const v = allVideos.find(x => x.id === id) || localVideos.find(x => x.id === id);
+  if(v) v.likesCount = Math.max(0, (v.likesCount || 0) + (was ? -1 : 1));
   renderFeed();
+
   if(id.startsWith("local_")) return;
+
   try{
-    const ref = doc(db, "videos", id, "likes", currentUser.uid);
-    if(was) await deleteDoc(ref);
-    else await setDoc(ref, { userId: currentUser.uid, createdAt: serverTimestamp() });
-  }catch(err){ console.warn(err); toast("Like could not sync"); }
+    const likeRef = doc(db, "videos", id, "likes", currentUser.uid);
+    const videoRef = doc(db, "videos", id);
+    if(was){
+      await deleteDoc(likeRef);
+      await updateDoc(videoRef, { likesCount: increment(-1) });
+    } else {
+      await setDoc(likeRef, { userId: currentUser.uid, createdAt: serverTimestamp() });
+      await updateDoc(videoRef, { likesCount: increment(1) });
+    }
+  }catch(err){
+    console.warn(err);
+    // revert
+    if(was) liked.add(id); else liked.delete(id);
+    if(v) v.likesCount = Math.max(0, (v.likesCount || 0) + (was ? 1 : -1));
+    renderFeed();
+    toast(t("likeFail"));
+  }
 };
 
-window.toggleFollow = (uid) => {
+window.toggleFollow = async (uid) => {
   if(!signedIn() || !uid || uid === currentUser.uid) return;
-  if(followed.has(uid)) followed.delete(uid); else followed.add(uid);
-  toast(followed.has(uid) ? "Following" : "Unfollowed");
+  const was = followed.has(uid);
+  if(was) followed.delete(uid); else followed.add(uid);
+  toast(was ? t("unfollowOk") : t("followOk"));
   renderFeed();
+
+  try{
+    const followRef = doc(db, "users", currentUser.uid, "following", uid);
+    const myRef = doc(db, "users", currentUser.uid);
+    const theirRef = doc(db, "users", uid);
+    if(was){
+      await deleteDoc(followRef);
+      await updateDoc(myRef, { followingCount: increment(-1) });
+      await updateDoc(theirRef, { followersCount: increment(-1) });
+    } else {
+      await setDoc(followRef, { userId: uid, createdAt: serverTimestamp() });
+      await updateDoc(myRef, { followingCount: increment(1) });
+      await updateDoc(theirRef, { followersCount: increment(1) });
+    }
+    if(myProfile){
+      myProfile.followingCount = Math.max(0, (myProfile.followingCount||0) + (was ? -1 : 1));
+    }
+  }catch(err){
+    console.warn("Follow sync:", err);
+  }
 };
 
 window.shareVideo = async (id) => {
   const url = location.origin + location.pathname + "#v-" + encodeURIComponent(id);
   try{
-    if(navigator.share) await navigator.share({ title: "KING COBRIX", text: "Watch on KING COBRIX", url });
+    if(navigator.share) await navigator.share({ title: "KING COBRIX", text: "Watch this on KING COBRIX", url });
     else { await navigator.clipboard.writeText(url); toast(t("shareCopied")); }
   }catch{
     try{ await navigator.clipboard.writeText(url); toast(t("shareCopied")); }catch{ toast(url); }
@@ -1051,7 +1216,7 @@ window.openComments = async (id) => {
   $("commentError").textContent = "";
   showModal("commentModal");
   if(id.startsWith("local_")){
-    $("commentList").innerHTML = `<p class="muted">Comments for local videos are offline only.</p>`;
+    $("commentList").innerHTML = `<p class="muted">Comments available after cloud upload.</p>`;
     return;
   }
   try{
@@ -1072,7 +1237,10 @@ $("commentForm").onsubmit = async (e) => {
   if(!signedIn() || !activeCommentVideo) return;
   const text = $("commentInput").value.trim();
   if(!text) return;
-  if(activeCommentVideo.startsWith("local_")){ $("commentError").textContent = "Online video required for comments."; return; }
+  if(activeCommentVideo.startsWith("local_")){
+    $("commentError").textContent = "Upload video first to enable comments.";
+    return;
+  }
   try{
     await addDoc(collection(db, "videos", activeCommentVideo, "comments"), {
       userId: currentUser.uid,
@@ -1080,10 +1248,15 @@ $("commentForm").onsubmit = async (e) => {
       text,
       createdAt: serverTimestamp()
     });
+    await updateDoc(doc(db, "videos", activeCommentVideo), { commentsCount: increment(1) });
+    const v = allVideos.find(x => x.id === activeCommentVideo);
+    if(v) v.commentsCount = (v.commentsCount || 0) + 1;
     $("commentInput").value = "";
     await window.openComments(activeCommentVideo);
     toast("Comment added");
-  }catch(err){ $("commentError").textContent = err.message || "Failed"; }
+  }catch(err){
+    $("commentError").textContent = err.message || "Failed to post";
+  }
 };
 
 window.viewCreator = async (uid) => {
@@ -1108,14 +1281,14 @@ window.viewCreator = async (uid) => {
         </div>
         <button class="edit-prof-btn" onclick="toggleFollow('${esc(uid)}')">${followed.has(uid)?"Following":"Follow"}</button>
       </div>
-      <div class="grid" style="margin-top:16px">${videos.map(v => `
+      <div class="grid" style="margin-top:16px">${videos.length ? videos.map(v => `
         <div class="grid-item"><video src="${esc(v.videoUrl)}" muted playsinline preload="metadata"></video>
-        <span class="views">▶ ${fmt(v.likesCount||0)}</span></div>`).join("") || `<div class="empty" style="grid-column:1/-1"><div class="big">🎥</div><h3>No public videos</h3></div>`}
+        <span class="views">▶ ${fmt(v.likesCount||0)}</span></div>`).join("") : `<div class="empty" style="grid-column:1/-1"><div class="big">🎥</div><h3>No public videos</h3></div>`}
       </div>`;
   }catch{ toast("Could not open profile"); }
 };
 
-/* ===== AUTH ===== */
+/* ===== AUTH + DATA ===== */
 async function loadUserProfile(uid){
   try{
     const snap = await getDoc(doc(db, "users", uid));
@@ -1124,16 +1297,38 @@ async function loadUserProfile(uid){
   return {};
 }
 
+async function loadMyLikesAndFollows(){
+  if(!currentUser) return;
+  liked.clear(); followed.clear();
+  try{
+    // Load following
+    const folSnap = await getDocs(collection(db, "users", currentUser.uid, "following"));
+    folSnap.forEach(d => followed.add(d.id));
+  }catch(e){ console.warn("following load", e); }
+
+  // Likes are checked per-video on demand; we also try to hydrate from recent videos
+  try{
+    for(const v of allVideos.slice(0, 30)){
+      try{
+        const likeSnap = await getDoc(doc(db, "videos", v.id, "likes", currentUser.uid));
+        if(likeSnap.exists()) liked.add(v.id);
+      }catch(_){}
+    }
+  }catch(_){}
+}
+
 async function afterLogin(user){
   currentUser = user;
   myProfile = await loadUserProfile(user.uid);
   if(!myProfile.username){
     const username = "creator_" + user.uid.slice(0,6);
-    myProfile = { ...myProfile, uid: user.uid, displayName: user.displayName||"Creator", username, bio:"", photoURL: user.photoURL||"" };
+    myProfile = { ...myProfile, uid: user.uid, displayName: user.displayName||"Creator", username, bio:"", photoURL: user.photoURL||"", followersCount:0, followingCount:0, postsCount:0 };
     try{
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid, displayName: myProfile.displayName, username, bio:"",
-        photoURL: user.photoURL||"", email: user.email||"", createdAt: serverTimestamp()
+        photoURL: user.photoURL||"", email: user.email||"",
+        followersCount:0, followingCount:0, postsCount:0,
+        createdAt: serverTimestamp()
       }, { merge: true });
     }catch(e){ console.warn(e); }
   }
@@ -1141,27 +1336,33 @@ async function afterLogin(user){
   closeModal("authModal");
   updateTopAccount();
   await loadVideos();
+  await loadMyLikesAndFollows();
   goHome();
   toast("Welcome to KING COBRIX!");
 }
 
 function updateTopAccount(){
   $("topAccount").textContent = currentUser
-    ? (myProfile?.displayName || currentUser.displayName || "Account").slice(0,12)
-    : t("signIn");
+    ? (myProfile?.displayName || currentUser.displayName || "Account").slice(0, 14)
+    : "Sign in";
 }
 
 async function loadVideos(){
   try{
-    const snap = await getDocs(query(collection(db, "videos"), orderBy("createdAt","desc"), limit(40)));
+    const snap = await getDocs(query(collection(db, "videos"), orderBy("createdAt","desc"), limit(50)));
     const rows = [];
     snap.forEach(d => {
       const v = d.data();
-      if(v.videoUrl) rows.push({ id: d.id, ...v });
+      if(v.videoUrl) rows.push({ id: d.id, ...v, filterClass: getFilterClass(v.filter) });
     });
     allVideos = rows;
+    // remove local duplicates that were already uploaded
+    localVideos = localVideos.filter(lv => !allVideos.some(av => av.videoUrl && lv.videoUrl === av.videoUrl));
     renderFeed();
-  }catch(err){ console.warn("Feed load:", err); }
+  }catch(err){
+    console.warn("Feed load:", err);
+    renderFeed();
+  }
 }
 
 window.logout = async () => {
@@ -1203,6 +1404,7 @@ onAuthStateChanged(auth, async (user) => {
     if(!myProfile) myProfile = await loadUserProfile(user.uid);
     updateTopAccount();
     await loadVideos();
+    await loadMyLikesAndFollows();
   } else {
     currentUser = null; myProfile = null;
     updateTopAccount();
@@ -1210,7 +1412,6 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-/* Init */
 updateTopAccount();
 renderFeed();
 </script>
