@@ -1,1 +1,298 @@
 
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="KING COBRIX - Short Video Creator Community">
+<title>KING COBRIX | Short Videos</title>
+<style>
+:root{--gold:#f5c542;--bg:#080808;--panel:#171717;--muted:#aaa}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+body{overflow:hidden}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{height:100dvh;max-width:520px;margin:auto;position:relative;background:#000;overflow:hidden}
+.topbar{position:absolute;z-index:20;top:0;left:0;right:0;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:linear-gradient(#000b,transparent)}
+.brand{font-weight:900;font-size:20px;letter-spacing:1px;color:#fff}
+.brand span{color:var(--gold)}
+.topbtn{background:#171717d9;color:white;border:1px solid #ffffff30;border-radius:22px;padding:9px 12px}
+.feed{position:absolute;inset:0;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
+.feed::-webkit-scrollbar{display:none}
+.video-card{height:100%;height:100dvh;position:relative;scroll-snap-align:start;background:#141414;overflow:hidden}
+.video-card video{width:100%;height:100%;object-fit:cover;background:#101010}
+.video-card:after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(transparent,#0002 45%,#000b);pointer-events:none}
+.video-overlay{position:absolute;inset:0;z-index:2;pointer-events:none}
+.video-info{position:absolute;left:14px;right:82px;bottom:95px;text-shadow:0 1px 4px #000;pointer-events:auto}
+.creator{font-size:16px;font-weight:800;margin-bottom:9px}
+.creator .verified{color:var(--gold)}
+.caption{font-size:14px;line-height:1.5;margin-bottom:10px;overflow-wrap:anywhere}
+.music{font-size:12px;color:#eee;margin-top:9px}
+.side-actions{position:absolute;right:10px;bottom:112px;width:58px;display:flex;align-items:center;gap:19px;flex-direction:column;pointer-events:auto}
+.avatar{width:48px;height:48px;border:2px solid var(--gold);border-radius:50%;background:#222;display:grid;place-items:center;font-size:23px}
+.action{border:0;background:transparent;color:white;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;text-shadow:0 1px 4px black;padding:0}
+.action .symbol{font-size:29px;line-height:1.1}
+.action.liked .symbol{color:#ff3155}
+.action.following .symbol{color:var(--gold)}
+.follow-dot{color:var(--gold);font-weight:bold;font-size:20px;line-height:10px}
+.sound-disc{position:absolute;right:16px;bottom:64px;width:42px;height:42px;border:2px solid #ffffff55;border-radius:50%;display:grid;place-items:center;background:#222c;animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress{position:absolute;z-index:5;left:0;right:0;bottom:58px;height:3px;background:#ffffff40}
+.progress span{display:block;width:0;height:100%;background:var(--gold)}
+.bottom-nav{position:absolute;z-index:30;bottom:0;left:0;right:0;height:58px;background:#080808f5;border-top:1px solid #ffffff18;display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom)}
+.navbtn{flex:1;height:100%;border:0;background:none;color:#aaa;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px}
+.navbtn b{font-size:22px;font-weight:500}
+.navbtn.active{color:var(--gold)}
+.nav-upload{background:var(--gold);color:#080808!important;border-radius:9px;height:34px;max-width:48px;margin:auto;font-size:23px!important;font-weight:900!important}
+.empty{height:100%;display:grid;place-items:center;padding:28px;text-align:center;color:#ccc}
+.empty h2{color:var(--gold)}
+.panel{position:absolute;z-index:40;inset:0;background:#080808;display:none;flex-direction:column}
+.panel.open{display:flex}
+.panel-head{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #ffffff1a}
+.panel-head h2{font-size:18px;color:var(--gold)}
+.close{background:#252525;color:white;border:0;border-radius:50%;width:36px;height:36px;font-size:22px}
+.panel-body{padding:18px;overflow-y:auto;flex:1}
+.field{width:100%;background:#171717;color:white;border:1px solid #393939;border-radius:12px;padding:13px;margin:7px 0 14px;outline:none}
+.field:focus{border-color:var(--gold)}
+.primary{width:100%;background:var(--gold);color:#090909;border:0;border-radius:12px;padding:14px;font-weight:800;margin:7px 0}
+.secondary{background:#252525;color:white;border:1px solid #444;border-radius:10px;padding:11px}
+.muted{color:var(--muted);font-size:13px;line-height:1.6}
+.comment{background:#181818;padding:12px;border-radius:12px;margin:9px 0;overflow-wrap:anywhere}
+.comment strong{color:var(--gold)}
+.search-result{padding:14px;background:#171717;border-radius:10px;margin:8px 0;cursor:pointer}
+.profile-head{text-align:center;padding:24px 0}
+.profile-avatar{font-size:52px;width:95px;height:95px;margin:auto;border-radius:50%;border:3px solid var(--gold);display:grid;place-items:center;background:#202020}
+.stats{display:flex;justify-content:space-around;margin:20px 0;text-align:center}
+.stats b{display:block;font-size:20px;color:var(--gold)}
+#toast{position:absolute;z-index:90;bottom:76px;left:12%;right:12%;background:#f5c542;color:#111;padding:12px;border-radius:12px;text-align:center;font-size:13px;font-weight:bold;display:none}
+.file-label{display:block;text-align:center;padding:22px;border:2px dashed #6b5720;border-radius:15px;margin-bottom:14px}
+#uploadPreview{width:100%;max-height:300px;object-fit:contain;display:none;background:#111;border-radius:12px}
+#cameraFile{display:none}
+@media(min-width:600px){body{background:#171717}.app{border-left:1px solid #333;border-right:1px solid #333}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand">KING <span>COBRIX</span> 🐍</div>
+  <button class="topbtn" onclick="openPanel('searchPanel')">⌕ تلاش</button>
+</header>
+
+<main id="feed" class="feed"></main>
+
+<div id="emptyState" class="empty" style="display:none">
+  <div><h2>🐍 KING COBRIX</h2><p>ابھی کوئی ویڈیو نہیں۔ اپنی پہلی ویڈیو اپلوڈ کریں!</p><button class="primary" onclick="openUpload()">＋ ویڈیو اپلوڈ کریں</button></div>
+</div>
+
+<nav class="bottom-nav">
+  <button class="navbtn active" onclick="showFeed()"><b>⌂</b>Home</button>
+  <button class="navbtn" onclick="openPanel('searchPanel')"><b>⌕</b>Discover</button>
+  <button class="navbtn" onclick="openUpload()"><b class="nav-upload">＋</b>Create</button>
+  <button class="navbtn" onclick="openPanel('inboxPanel')"><b>♡</b>Inbox</button>
+  <button class="navbtn" onclick="openPanel('profilePanel')"><b>♙</b>Profile</button>
+</nav>
+
+<section class="panel" id="uploadPanel">
+  <div class="panel-head"><h2>＋ نئی ویڈیو</h2><button class="close" onclick="closePanels()">×</button></div>
+  <div class="panel-body">
+    <label class="file-label" for="cameraFile"><div style="font-size:42px">🎬</div><b>فون سے ویڈیو منتخب کریں</b><p class="muted">MP4، MOV یا فون کی ویڈیو</p></label>
+    <input id="cameraFile" type="file" accept="video/*">
+    <video id="uploadPreview" controls playsinline></video>
+    <label for="captionInput">ویڈیو کا کیپشن</label>
+    <textarea id="captionInput" class="field" rows="3" maxlength="300" placeholder="اپنی ویڈیو کے بارے میں لکھیں..."></textarea>
+    <label for="creatorInput">آپ کا نام</label>
+    <input id="creatorInput" class="field" maxlength="40" placeholder="مثلاً King Cobrix">
+    <button class="primary" onclick="publishVideo()">ویڈیو فیڈ میں شامل کریں</button>
+    <p class="muted">نوٹ: اس ورژن میں ویڈیو اسی براؤزر میں مقامی طور پر چلتی ہے؛ یہ خودبخود دوسرے لوگوں کے اکاؤنٹس پر اپلوڈ نہیں ہوتی۔</p>
+  </div>
+</section>
+
+<section class="panel" id="searchPanel">
+  <div class="panel-head"><h2>🔎 Discover</h2><button class="close" onclick="closePanels()">×</button></div>
+  <div class="panel-body">
+    <input id="searchInput" class="field" placeholder="ویڈیو یا کریئیٹر تلاش کریں..." oninput="searchVideos()">
+    <div id="searchResults"></div>
+    <p class="muted">یہ تلاش اس ڈیمو میں موجود ویڈیوز تک محدود ہے۔</p>
+  </div>
+</section>
+
+<section class="panel" id="commentsPanel">
+  <div class="panel-head"><h2>💬 کمنٹس</h2><button class="close" onclick="closePanels()">×</button></div>
+  <div id="commentsList" class="panel-body"></div>
+  <div style="padding:12px;border-top:1px solid #333">
+    <input id="commentInput" class="field" placeholder="اپنا کمنٹ لکھیں..." maxlength="300">
+    <button class="primary" onclick="sendComment()">کمنٹ بھیجیں</button>
+  </div>
+</section>
+
+<section class="panel" id="profilePanel">
+  <div class="panel-head"><h2>👤 میرا پروفائل</h2><button class="close" onclick="closePanels()">×</button></div>
+  <div class="panel-body">
+    <div class="profile-head"><div class="profile-avatar">🐍</div><h2 id="profileName">KING COBRIX</h2><p class="muted">@kingcobrix</p></div>
+    <div class="stats"><div><b id="myVideoCount">0</b>Videos</div><div><b id="myLikeCount">0</b>Likes</div><div><b id="followingCount">0</b>Following</div></div>
+    <label>اپنا نام تبدیل کریں</label>
+    <input id="profileNameInput" class="field" maxlength="40" placeholder="اپنا نام لکھیں">
+    <button class="primary" onclick="saveProfile()">پروفائل محفوظ کریں</button>
+    <h3 style="color:#f5c542">آپ کی ویڈیوز</h3>
+    <div id="myVideos"></div>
+    <p class="muted">یہ مقامی ڈیمو پروفائل ہے، حقیقی لاگ اِن اکاؤنٹ نہیں۔</p>
+  </div>
+</section>
+
+<section class="panel" id="inboxPanel">
+  <div class="panel-head"><h2>♡ Inbox</h2><button class="close" onclick="closePanels()">×</button></div>
+  <div class="panel-body"><h3>KING COBRIX میں خوش آمدید!</h3><p class="muted">یہ ڈیمو ان باکس ہے۔ حقیقی نوٹیفکیشن اور میسجنگ کے لیے سرور اور صارف اکاؤنٹس درکار ہوں گے۔</p></div>
+</section>
+
+<div id="toast"></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const sampleVideos = [
+ {id:'demo1',src:'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',name:'KING COBRIX',caption:'🐍 Welcome to KING COBRIX! ہماری ویڈیو کمیونٹی میں خوش آمدید۔ #kingcobrix',music:'Original Sound',likes:0,liked:false,following:false,comments:[],demo:true},
+ {id:'demo2',src:'https://www.w3schools.com/html/mov_bbb.mp4',name:'COBRIX CREATOR',caption:'🎬 ویڈیوز دیکھیں، اپنی تخلیقی صلاحیت دکھائیں اور مزہ کریں! #videos',music:'Creator Sound',likes:0,liked:false,following:false,comments:[],demo:true}
+];
+let videos = [...sampleVideos];
+let activeCommentsId = null;
+let myName = localStorage.getItem('kc_name') || 'KING COBRIX';
+let myUploads = 0;
+let following = new Set();
+let uploadObjectUrl = null;
+let observer = null;
+
+function toast(msg){
+ const el=$('toast');el.textContent=msg;el.style.display='block';
+ clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.style.display='none',2600);
+}
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function renderFeed(){
+ if(observer)observer.disconnect();
+ const feed=$('feed');
+ feed.innerHTML='';
+ $('emptyState').style.display=videos.length?'none':'grid';
+ videos.forEach(v=>{
+  const card=document.createElement('article');
+  card.className='video-card';card.dataset.id=v.id;
+  card.innerHTML=`
+   <video src="${escapeHTML(v.src)}" loop playsinline preload="metadata"></video>
+   <div class="video-overlay">
+    <div class="video-info">
+     <div class="creator">@${escapeHTML(v.name)} <span class="verified">✦</span></div>
+     <div class="caption">${escapeHTML(v.caption)}</div>
+     <div class="music">♫ ${escapeHTML(v.music)}</div>
+    </div>
+    <div class="side-actions">
+     <div class="avatar">🐍</div>
+     <button class="action ${v.liked?'liked':''}" data-action="like"><span class="symbol">${v.liked?'♥':'♡'}</span><span>${v.likes}</span></button>
+     <button class="action ${v.following?'following':''}" data-action="follow"><span class="symbol">${v.following?'✓':'⊕'}</span><span>${v.following?'Following':'Follow'}</span></button>
+     <button class="action" data-action="comments"><span class="symbol">▢</span><span>${v.comments.length} Comments</span></button>
+     <button class="action" data-action="share"><span class="symbol">➤</span><span>Share</span></button>
+     <button class="action" data-action="sound"><span class="symbol">♫</span><span>Sound</span></button>
+    </div>
+    <div class="sound-disc">🐍</div>
+    <div class="progress"><span></span></div>
+   </div>`;
+  card.addEventListener('click',e=>{
+   const btn=e.target.closest('[data-action]');
+   if(btn){e.stopPropagation();handleAction(v.id,btn.dataset.action,card);return;}
+   const vid=card.querySelector('video');
+   if(vid.paused)vid.play().catch(()=>toast('ویڈیو چلانے کے لیے دوبارہ دبائیں'));else vid.pause();
+  });
+  const vid=card.querySelector('video');
+  vid.addEventListener('timeupdate',()=>{
+   const bar=card.querySelector('.progress span');
+   if(bar&&vid.duration)bar.style.width=(vid.currentTime/vid.duration*100)+'%';
+  });
+  vid.addEventListener('error',()=>{});
+  feed.appendChild(card);
+ });
+ observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+   const vid=entry.target.querySelector('video');
+   if(entry.isIntersecting&&entry.intersectionRatio>=.65){
+    document.querySelectorAll('.video-card video').forEach(other=>{if(other!==vid)other.pause()});
+    vid.play().catch(()=>{});
+   }else vid.pause();
+  });
+ },{root:feed,threshold:[.2,.65,.9]});
+ document.querySelectorAll('.video-card').forEach(c=>observer.observe(c));
+ updateProfile();
+}
+function handleAction(id,action,card){
+ const v=videos.find(x=>x.id===id);if(!v)return;
+ if(action==='like'){v.liked=!v.liked;v.likes=Math.max(0,v.likes+(v.liked?1:-1));renderFeed();}
+ if(action==='follow'){v.following=!v.following;if(v.following)following.add(v.name);else following.delete(v.name);renderFeed();}
+ if(action==='comments'){activeCommentsId=id;renderComments();}
+ if(action==='share'){
+  const text=`${v.name}: ${v.caption}`;
+  if(navigator.share)navigator.share({title:'KING COBRIX',text,url:location.href}).catch(()=>{});
+  else if(navigator.clipboard)navigator.clipboard.writeText(text+' '+location.href).then(()=>toast('شیئر لنک کاپی ہوگیا')).catch(()=>toast(text));
+  else toast(text);
+ }
+ if(action==='sound'){
+  const vid=card.querySelector('video');vid.muted=!vid.muted;
+  toast(vid.muted?'آواز بند ہے':'آواز آن ہے');
+ }
+}
+function openPanel(id){closePanels();$(id).classList.add('open');if(id==='profilePanel')updateProfile();if(id==='searchPanel')searchVideos();}
+function closePanels(){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('open'))}
+function showFeed(){closePanels();$('feed').scrollTo({top:0,behavior:'smooth'})}
+function openUpload(){openPanel('uploadPanel')}
+$('cameraFile').addEventListener('change',e=>{
+ const file=e.target.files[0];if(!file)return;
+ if(!file.type.startsWith('video/')){toast('براہ کرم ویڈیو فائل منتخب کریں');return}
+ if(uploadObjectUrl)URL.revokeObjectURL(uploadObjectUrl);
+ uploadObjectUrl=URL.createObjectURL(file);
+ $('uploadPreview').src=uploadObjectUrl;$('uploadPreview').style.display='block';
+});
+function publishVideo(){
+ const file=$('cameraFile').files[0];
+ if(!file){toast('پہلے فون سے ویڈیو منتخب کریں');return}
+ const caption=$('captionInput').value.trim()||'میری نئی ویڈیو! #kingcobrix';
+ const name=$('creatorInput').value.trim()||myName;
+ videos.unshift({id:'local'+Date.now(),src:uploadObjectUrl,name,caption,music:'Original Sound',likes:0,liked:false,following:false,comments:[],demo:false});
+ myUploads++;uploadObjectUrl=null;
+ $('cameraFile').value='';$('uploadPreview').removeAttribute('src');$('uploadPreview').style.display='none';$('captionInput').value='';
+ closePanels();renderFeed();$('feed').scrollTo({top:0,behavior:'smooth'});
+ toast('ویڈیو اس سیشن کی فیڈ میں شامل ہوگئی');
+}
+function renderComments(){
+ const v=videos.find(x=>x.id===activeCommentsId);if(!v)return;
+ openPanel('commentsPanel');
+ $('commentsList').innerHTML=v.comments.length?v.comments.map(c=>`<div class="comment"><strong>${escapeHTML(c.name)}</strong><p>${escapeHTML(c.text)}</p></div>`).join(''):'<p class="muted">ابھی کوئی کمنٹ نہیں۔ پہلا کمنٹ آپ کریں!</p>';
+}
+function sendComment(){
+ const text=$('commentInput').value.trim();if(!text)return toast('پہلے کمنٹ لکھیں');
+ const v=videos.find(x=>x.id===activeCommentsId);if(!v)return;
+ v.comments.push({name:myName,text});$('commentInput').value='';renderComments();toast('کمنٹ شامل ہوگیا');
+}
+function searchVideos(){
+ const q=($('searchInput').value||'').trim().toLowerCase();
+ const list=videos.filter(v=>(v.caption+' '+v.name).toLowerCase().includes(q));
+ $('searchResults').innerHTML=list.length?list.map(v=>`<div class="search-result" onclick="playSearched('${v.id}')"><b>🐍 @${escapeHTML(v.name)}</b><p>${escapeHTML(v.caption)}</p><small>${v.likes} likes · ${v.comments.length} comments</small></div>`).join(''):'<p class="muted">کوئی نتیجہ نہیں ملا۔</p>';
+}
+function playSearched(id){
+ closePanels();const card=document.querySelector(`[data-id="${id}"]`);
+ if(card){card.scrollIntoView({behavior:'smooth'});const vid=card.querySelector('video');vid.play().catch(()=>{});}
+}
+function saveProfile(){
+ const name=$('profileNameInput').value.trim();if(!name)return toast('اپنا نام لکھیں');
+ myName=name;localStorage.setItem('kc_name',myName);updateProfile();toast('نام اس براؤزر میں محفوظ ہوگیا');
+}
+function updateProfile(){
+ $('profileName').textContent=myName;$('profileNameInput').value=myName;
+ $('myVideoCount').textContent=videos.filter(v=>!v.demo).length;
+ $('myLikeCount').textContent=videos.filter(v=>!v.demo).reduce((a,v)=>a+v.likes,0);
+ $('followingCount').textContent=following.size;
+ $('myVideos').innerHTML=videos.filter(v=>!v.demo).map(v=>`<div class="search-result"><b>${escapeHTML(v.caption)}</b><p>${v.likes} Likes · ${v.comments.length} Comments</p></div>`).join('')||'<p class="muted">آپ نے ابھی کوئی ویڈیو اپلوڈ نہیں کی۔</p>';
+}
+renderFeed();
+</script>
+</body>
+</html>
+
