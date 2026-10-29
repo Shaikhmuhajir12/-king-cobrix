@@ -1,496 +1,829 @@
 
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#090909">
-<meta name="description" content="KING COBRIX - Short Video Creator Community">
-<title>KING COBRIX | Short Videos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08090c">
+<meta name="description" content="KING COBRIX — Create, watch and share short videos.">
+<title>KING COBRIX | Reels</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-:root{--gold:#f5c542;--bg:#080808;--panel:#171717;--muted:#aaa}
+:root{
+  --bg:#08090c;--panel:#111319;--panel2:#181b23;--line:#272b35;
+  --gold:#e7c56b;--gold2:#ffedb0;--white:#f8f8fb;
+  --muted:#9297a5;--pink:#ff3d72;--green:#36d399;
+}
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
-body{overflow:hidden}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
-.app{height:100dvh;max-width:520px;margin:auto;position:relative;background:#000;overflow:hidden}
-.topbar{position:absolute;z-index:20;top:0;left:0;right:0;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:linear-gradient(#000d,transparent);gap:6px}
-.brand{font-weight:900;font-size:19px;letter-spacing:1px;color:#fff;white-space:nowrap}
+button:disabled{opacity:.5;cursor:not-allowed}
+a{color:inherit;text-decoration:none}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.gold{color:var(--gold)}
+.urdu{font-family:"Noto Nastaliq Urdu",serif;line-height:2}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+#app{min-height:100vh}
+.topbar{
+ position:fixed;top:0;left:0;right:0;height:64px;z-index:30;
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:0 max(16px,calc((100vw - 1120px)/2));
+ background:rgba(8,9,12,.88);backdrop-filter:blur(20px);
+ border-bottom:1px solid rgba(255,255,255,.07)
+}
+.brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:900;letter-spacing:1px;white-space:nowrap}
+.brand-mark{
+ width:36px;height:36px;border-radius:12px;display:grid;place-items:center;
+ background:linear-gradient(135deg,#ffefb3,#b28a2c);color:#17120a;font-size:23px;
+ box-shadow:0 0 25px #e7c56b20
+}
 .brand span{color:var(--gold)}
-.topbtn{background:#171717e8;color:white;border:1px solid #ffffff30;border-radius:22px;padding:9px 11px;font-size:12px}
-.login-top{background:var(--gold);color:#111;font-weight:bold;border:0}
-.feed{position:absolute;inset:0;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}
-.feed::-webkit-scrollbar{display:none}
-.video-card{height:100%;height:100dvh;position:relative;scroll-snap-align:start;background:#141414;overflow:hidden}
-.video-card video{width:100%;height:100%;object-fit:cover;background:#101010}
-.video-card:after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(transparent,#0002 45%,#000b);pointer-events:none}
-.video-overlay{position:absolute;inset:0;z-index:2;pointer-events:none}
-.video-info{position:absolute;left:14px;right:82px;bottom:95px;text-shadow:0 1px 4px #000;pointer-events:auto}
-.creator{font-size:16px;font-weight:800;margin-bottom:9px}
-.creator .verified{color:var(--gold)}
-.caption{font-size:14px;line-height:1.5;margin-bottom:10px;overflow-wrap:anywhere}
-.music{font-size:12px;color:#eee;margin-top:9px}
-.side-actions{position:absolute;right:10px;bottom:112px;width:58px;display:flex;align-items:center;gap:19px;flex-direction:column;pointer-events:auto}
-.avatar{width:48px;height:48px;border:2px solid var(--gold);border-radius:50%;background:#222;display:grid;place-items:center;font-size:23px}
-.action{border:0;background:transparent;color:white;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;text-shadow:0 1px 4px black;padding:0}
-.action .symbol{font-size:29px;line-height:1.1}
-.action.liked .symbol{color:#ff3155}
-.action.following .symbol{color:var(--gold)}
-.sound-disc{position:absolute;right:16px;bottom:64px;width:42px;height:42px;border:2px solid #ffffff55;border-radius:50%;display:grid;place-items:center;background:#222c;animation:spin 6s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.progress{position:absolute;z-index:5;left:0;right:0;bottom:58px;height:3px;background:#ffffff40}
-.progress span{display:block;width:0;height:100%;background:var(--gold)}
-.bottom-nav{position:absolute;z-index:30;bottom:0;left:0;right:0;height:58px;background:#080808f5;border-top:1px solid #ffffff18;display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom)}
-.navbtn{flex:1;height:100%;border:0;background:none;color:#aaa;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px}
-.navbtn b{font-size:22px;font-weight:500}
-.navbtn.active{color:var(--gold)}
-.nav-upload{background:var(--gold);color:#080808!important;border-radius:9px;height:34px;max-width:48px;margin:auto;font-size:23px!important;font-weight:900!important}
-.empty{height:100%;display:grid;place-items:center;padding:28px;text-align:center;color:#ccc}
-.empty h2{color:var(--gold)}
-.panel{position:absolute;z-index:40;inset:0;background:#080808;display:none;flex-direction:column}
-.panel.open{display:flex}
-.panel-head{height:58px;min-height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #ffffff1a}
-.panel-head h2{font-size:18px;color:var(--gold)}
-.close{background:#252525;color:white;border:0;border-radius:50%;width:36px;height:36px;font-size:22px}
-.panel-body{padding:18px;overflow-y:auto;flex:1}
-.field{width:100%;background:#171717;color:white;border:1px solid #393939;border-radius:12px;padding:13px;margin:7px 0 14px;outline:none}
-.field:focus{border-color:var(--gold)}
-.primary{width:100%;background:var(--gold);color:#090909;border:0;border-radius:12px;padding:14px;font-weight:800;margin:7px 0}
-.secondary{background:#252525;color:white;border:1px solid #444;border-radius:10px;padding:11px}
-.muted{color:var(--muted);font-size:13px;line-height:1.6}
-.comment{background:#181818;padding:12px;border-radius:12px;margin:9px 0;overflow-wrap:anywhere}
-.comment strong{color:var(--gold)}
-.search-result{padding:14px;background:#171717;border-radius:10px;margin:8px 0;cursor:pointer;overflow-wrap:anywhere}
-.profile-head{text-align:center;padding:24px 0}
-.profile-avatar{font-size:52px;width:95px;height:95px;margin:auto;border-radius:50%;border:3px solid var(--gold);display:grid;place-items:center;background:#202020}
-.stats{display:flex;justify-content:space-around;margin:20px 0;text-align:center}
-.stats b{display:block;font-size:20px;color:var(--gold)}
-#toast{position:absolute;z-index:90;bottom:76px;left:8%;right:8%;background:#f5c542;color:#111;padding:12px;border-radius:12px;text-align:center;font-size:13px;font-weight:bold;display:none;overflow-wrap:anywhere}
-.file-label{display:block;text-align:center;padding:22px;border:2px dashed #6b5720;border-radius:15px;margin-bottom:14px}
-#uploadPreview{width:100%;max-height:300px;object-fit:contain;display:none;background:#111;border-radius:12px}
-#cameraFile{display:none}
-.auth-logo{text-align:center;font-size:50px;margin:12px}
-.auth-note{background:#171717;border:1px solid #333;border-radius:12px;padding:12px;margin:12px 0}
-#authStatus{overflow-wrap:anywhere}
-button:disabled{opacity:.55;cursor:wait}
-@media(min-width:600px){body{background:#171717}.app{border-left:1px solid #333;border-right:1px solid #333}}
+.top-actions{display:flex;align-items:center;gap:9px}
+.icon-btn,.round-btn{
+ border:1px solid var(--line);background:var(--panel);color:white;
+ border-radius:13px;min-width:40px;height:40px;padding:0 12px;
+ display:inline-flex;align-items:center;justify-content:center;gap:7px
+}
+.icon-btn:hover,.round-btn:hover{border-color:var(--gold)}
+.primary{
+ border:0;border-radius:12px;padding:12px 18px;font-weight:800;
+ color:#17130a;background:linear-gradient(135deg,var(--gold2),#c69b3b)
+}
+.secondary{border:1px solid var(--line);background:var(--panel2);color:white;border-radius:12px;padding:11px 15px}
+.danger{color:#ff7894}
+.layout{max-width:1120px;margin:0 auto;padding:82px 16px 90px;display:grid;grid-template-columns:220px minmax(0,1fr) 240px;gap:24px}
+.sidebar{position:sticky;top:82px;height:calc(100vh - 105px);display:flex;flex-direction:column;gap:7px}
+.navitem{
+ display:flex;align-items:center;gap:13px;width:100%;padding:13px 14px;
+ border:0;border-radius:13px;background:transparent;color:#c6c9d2;text-align:left;font-weight:650
+}
+.navitem:hover,.navitem.active{background:#e7c56b13;color:var(--gold)}
+.navicon{width:23px;text-align:center;font-size:20px}
+.nav-divider{height:1px;background:var(--line);margin:12px 0}
+.sidebar-foot{margin-top:auto;font-size:11px;color:var(--muted);line-height:1.8;padding:10px}
+.main{min-width:0}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 18px}
+.section-heading h1,.section-heading h2{font-size:23px;margin:0;letter-spacing:-.6px}
+.section-heading p{margin:6px 0 0;font-size:12px;color:var(--muted)}
+.story-strip{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 18px;scrollbar-width:none}
+.story{flex:0 0 66px;text-align:center;cursor:pointer}
+.story-ring{width:62px;height:62px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#f8df86,#bb70f4,#ff3d72);margin:0 auto 7px}
+.story-ring img,.story-ring .placeholder{width:100%;height:100%;object-fit:cover;border-radius:50%;background:#222;display:grid;place-items:center}
+.story-name{font-size:10px;color:#c7c9d2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.feed-tabs{display:flex;gap:20px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.feed-tab{padding:12px 2px;background:transparent;border:0;border-bottom:2px solid transparent;color:var(--muted);font-weight:700}
+.feed-tab.active{border-color:var(--gold);color:var(--gold)}
+.video-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:24px}
+.video-head{display:flex;align-items:center;gap:10px;padding:14px}
+.avatar{width:40px;height:40px;flex:0 0 40px;border-radius:50%;object-fit:cover;background:#272a32;display:grid;place-items:center;font-weight:800;color:var(--gold);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.creator-name{font-size:13px;font-weight:800}
+.creator-handle{font-size:11px;color:var(--muted);margin-top:4px}
+.follow-btn{margin-left:auto;background:transparent;color:var(--gold);border:1px solid #e7c56b70;border-radius:9px;padding:7px 12px;font-size:12px;font-weight:800}
+.video-stage{position:relative;background:#000;overflow:hidden;aspect-ratio:9/12;max-height:620px}
+.video-stage video{width:100%;height:100%;object-fit:cover;display:block;background:#050505}
+.video-gradient{position:absolute;inset:35% 0 0;pointer-events:none;background:linear-gradient(transparent,rgba(0,0,0,.73))}
+.video-info{position:absolute;bottom:15px;left:15px;right:72px;z-index:2;pointer-events:none}
+.video-info h3{font-size:14px;margin:0 0 7px;text-shadow:0 2px 8px #000}
+.video-info p{font-size:12px;line-height:1.6;margin:0;color:#eee;text-shadow:0 1px 8px #000;overflow-wrap:anywhere}
+.video-actions{position:absolute;right:12px;bottom:22px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:15px}
+.action{display:flex;flex-direction:column;align-items:center;gap:5px;background:transparent;border:0;color:white;text-shadow:0 2px 8px #000;padding:0}
+.action .symbol{font-size:25px;filter:drop-shadow(0 2px 5px #000)}
+.action .count{font-size:10px;font-weight:800}
+.action.liked .symbol{color:var(--pink)}
+.video-bottom{padding:12px 14px 15px}
+.caption{font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.video-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;color:var(--muted);font-size:11px}
+.progress{height:3px;background:#303039;margin-top:10px;border-radius:8px;overflow:hidden}
+.progress i{height:100%;width:0;background:var(--gold);display:block}
+.right-panel{position:sticky;top:82px;align-self:start}
+.panel-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:15px}
+.panel-card h3{font-size:13px;margin:0 0 14px}
+.me-row{display:flex;align-items:center;gap:10px}
+.me-row .avatar{width:46px;height:46px;flex-basis:46px}
+.me-row strong{font-size:12px}
+.me-row p{font-size:11px;color:var(--muted);margin:5px 0 0;overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:17px}
+.stat{text-align:center}
+.stat strong{display:block;font-size:15px}
+.stat span{font-size:10px;color:var(--muted)}
+.trend{display:flex;align-items:center;gap:9px;margin:13px 0}
+.trend-icon{width:36px;height:36px;border-radius:11px;background:#24232d;display:grid;place-items:center}
+.trend strong{font-size:11px;display:block}
+.trend span{font-size:10px;color:var(--muted)}
+.bottom-nav{display:none}
+.empty-state{text-align:center;padding:36px 18px;background:var(--panel);border:1px solid var(--line);border-radius:18px}
+.empty-state .big{font-size:40px}
+.empty-state h3{margin:12px 0 7px}
+.empty-state p{font-size:12px;color:var(--muted);line-height:1.7}
+.page-panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px}
+.search-box{display:flex;gap:8px;margin:18px 0}
+.search-box input,.field input,.field textarea{
+ width:100%;min-width:0;background:#0c0e13;border:1px solid var(--line);
+ border-radius:12px;color:white;padding:13px;outline:none
+}
+.field{margin:14px 0}
+.field label{display:block;color:#c5c8d2;font-size:12px;margin-bottom:8px}
+.field textarea{min-height:90px;resize:vertical}
+.profile-cover{height:140px;border-radius:15px;background:radial-gradient(ellipse at top right,#59481c,transparent 60%),linear-gradient(135deg,#20232d,#0b0c10)}
+.profile-head{display:flex;align-items:end;gap:15px;margin-top:-35px;padding:0 16px}
+.profile-head .avatar{width:84px;height:84px;flex-basis:84px;border:4px solid var(--panel);font-size:24px}
+.profile-head .primary{margin-left:auto}
+.profile-bio{padding:15px 16px;font-size:12px;line-height:1.8;color:#c5c8d2}
+.profile-stats{display:flex;gap:25px;padding:0 16px 16px}
+.profile-stats strong{font-size:16px}
+.profile-stats span{font-size:11px;color:var(--muted)}
+.profile-tabs{display:flex;justify-content:space-around;border-top:1px solid var(--line);margin-top:8px}
+.profile-tabs button{background:transparent;color:var(--muted);border:0;padding:14px;font-size:12px}
+.profile-tabs button.active{color:var(--gold);border-bottom:2px solid var(--gold)}
+.grid-videos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:10px}
+.grid-tile{position:relative;aspect-ratio:3/4;background:#222;overflow:hidden;cursor:pointer;border-radius:7px}
+.grid-tile video{width:100%;height:100%;object-fit:cover}
+.grid-tile span{position:absolute;bottom:7px;left:7px;font-size:10px;text-shadow:0 2px 5px black}
+.modal-backdrop{position:fixed;inset:0;background:#000b;z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-backdrop.show{display:flex}
+.modal{width:min(440px,100%);max-height:90dvh;overflow:auto;background:#111319;border:1px solid #30333e;border-radius:22px;padding:22px;box-shadow:0 25px 100px #000a}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.modal-head h2{font-size:19px;margin:0}
+.close{border:0;background:#242630;color:white;border-radius:10px;width:36px;height:36px;font-size:18px}
+.modal p{font-size:12px;line-height:1.8;color:var(--muted)}
+.google-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid #454957;border-radius:12px;background:#fff;color:#171717;padding:13px;font-weight:800}
+.google-letter{width:22px;height:22px;border-radius:50%;background:white;color:#4285f4;display:grid;place-items:center;font-size:18px}
+.error{font-size:12px;color:#ff8499;line-height:1.7;margin-top:12px;overflow-wrap:anywhere}
+.success{font-size:12px;color:var(--green);margin-top:10px}
+.toast{position:fixed;bottom:85px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:150;background:#222630;border:1px solid #424651;border-radius:12px;padding:12px 17px;font-size:12px;transition:.25s;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.settings-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}
+.settings-row:last-child{border-bottom:0}
+.settings-row strong{font-size:13px}
+.settings-row p{font-size:11px;color:var(--muted);margin:5px 0 0}
+.language-select{background:#0c0e13;color:white;border:1px solid var(--line);border-radius:10px;padding:9px}
+.comment-item{padding:12px 0;border-bottom:1px solid var(--line);font-size:12px;line-height:1.7}
+.comment-item:last-child{border-bottom:0}
+.comment-form{display:flex;gap:8px;margin-top:12px}
+.comment-form input{flex:1;min-width:0;background:#0c0e13;color:white;border:1px solid var(--line);border-radius:11px;padding:12px}
+@media(max-width:950px){
+ .layout{grid-template-columns:70px minmax(0,1fr);gap:16px}
+ .sidebar{align-items:center}
+ .navitem{justify-content:center;padding:13px 5px}
+ .navitem .navtext,.sidebar-foot{display:none}
+ .navicon{font-size:22px}
+ .right-panel{display:none}
+}
+@media(max-width:600px){
+ .topbar{height:57px;padding:0 12px}
+ .brand{font-size:15px;letter-spacing:.4px}
+ .brand-mark{width:32px;height:32px}
+ .top-actions .hide-mobile{display:none}
+ .layout{display:block;padding:70px 0 75px}
+ .sidebar{display:none}
+ .main{width:100%}
+ .section-heading,.story-strip,.feed-tabs{margin-left:14px;margin-right:14px}
+ .video-card{border-radius:0;border-left:0;border-right:0;margin-bottom:16px}
+ .video-head{padding:12px 14px}
+ .video-stage{aspect-ratio:9/13;max-height:76dvh}
+ .video-actions{right:10px;bottom:20px;gap:14px}
+ .video-info{left:13px;right:66px;bottom:12px}
+ .video-card .video-bottom{padding:10px 14px 13px}
+ .page-panel{margin:0 12px;padding:15px}
+ .bottom-nav{
+   position:fixed;bottom:0;left:0;right:0;z-index:35;display:flex;
+   justify-content:space-around;align-items:center;height:66px;
+   padding:5px 4px max(5px,env(safe-area-inset-bottom));
+   background:rgba(10,11,15,.96);backdrop-filter:blur(20px);
+   border-top:1px solid var(--line)
+ }
+ .bottom-nav button{display:flex;flex-direction:column;align-items:center;gap:4px;background:transparent;border:0;color:var(--muted);font-size:10px;min-width:47px}
+ .bottom-nav button b{font-size:21px;font-weight:500}
+ .bottom-nav button.active{color:var(--gold)}
+ .bottom-nav .create{width:43px;height:31px;border-radius:10px;background:linear-gradient(135deg,var(--gold2),#c69b3b);color:#17130a;font-size:24px;display:grid;place-items:center}
+ .toast{bottom:78px}
+}
 </style>
 </head>
-<body>
-<div class="app">
 
+<body>
+<div id="app">
 <header class="topbar">
-  <div class="brand">KING <span>COBRIX</span> 🐍</div>
-  <button class="topbtn" onclick="openPanel('searchPanel')">⌕ تلاش</button>
-  <button class="topbtn login-top" id="topLoginBtn" onclick="openAuthPanel()">Login</button>
+  <a href="#" class="brand" onclick="return false" aria-label="KING COBRIX">
+    <div class="brand-mark">♛</div>
+    KING <span>COBRIX</span>
+  </a>
+  <div class="top-actions">
+    <button class="icon-btn hide-mobile" onclick="navigate('discover')" title="Search">⌕ <span data-i18n="search">Search</span></button>
+    <button class="icon-btn" onclick="navigate('notifications')" title="Notifications">♧</button>
+    <button class="round-btn" id="topAccount" onclick="openAuth()">Sign in</button>
+  </div>
 </header>
 
-<main id="feed" class="feed"></main>
+<div class="layout">
+  <aside class="sidebar">
+    <button class="navitem active" data-page="home" onclick="navigate('home')"><span class="navicon">⌂</span><span class="navtext" data-i18n="home">Home</span></button>
+    <button class="navitem" data-page="discover" onclick="navigate('discover')"><span class="navicon">⌕</span><span class="navtext" data-i18n="discover">Discover</span></button>
+    <button class="navitem" data-page="upload" onclick="navigate('upload')"><span class="navicon">＋</span><span class="navtext" data-i18n="create">Create</span></button>
+    <button class="navitem" data-page="notifications" onclick="navigate('notifications')"><span class="navicon">♡</span><span class="navtext" data-i18n="notifications">Notifications</span></button>
+    <button class="navitem" data-page="inbox" onclick="navigate('inbox')"><span class="navicon">▤</span><span class="navtext" data-i18n="inbox">Inbox</span></button>
+    <div class="nav-divider"></div>
+    <button class="navitem" data-page="profile" onclick="navigate('profile')"><span class="navicon">◉</span><span class="navtext" data-i18n="profile">Profile</span></button>
+    <button class="navitem" data-page="settings" onclick="navigate('settings')"><span class="navicon">⚙</span><span class="navtext" data-i18n="settings">Settings</span></button>
+    <div class="sidebar-foot">© 2026 KING COBRIX<br>Make every moment count.</div>
+  </aside>
 
-<div id="emptyState" class="empty" style="display:none">
-  <div><h2>🐍 KING COBRIX</h2><p>ابھی کوئی ویڈیو نہیں۔ اپنی پہلی ویڈیو اپلوڈ کریں!</p><button class="primary" onclick="openUpload()">＋ ویڈیو اپلوڈ کریں</button></div>
+  <main class="main" id="mainContent"></main>
+
+  <aside class="right-panel">
+    <div class="panel-card">
+      <h3 data-i18n="yourAccount">Your account</h3>
+      <div class="me-row">
+        <div class="avatar" id="sideAvatar">K</div>
+        <div><strong id="sideName">Guest Creator</strong><p id="sideHandle">@guest</p></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="sidePosts">0</strong><span data-i18n="posts">Posts</span></div>
+        <div class="stat"><strong id="sideFollowers">0</strong><span data-i18n="followers">Followers</span></div>
+        <div class="stat"><strong id="sideFollowing">0</strong><span data-i18n="following">Following</span></div>
+      </div>
+      <button class="secondary" style="width:100%;margin-top:15px" onclick="navigate('profile')" data-i18n="viewProfile">View profile</button>
+    </div>
+    <div class="panel-card">
+      <h3 data-i18n="trending">Trending now</h3>
+      <div class="trend"><div class="trend-icon">🔥</div><div><strong>#KingCobrix</strong><span>Community</span></div></div>
+      <div class="trend"><div class="trend-icon">🎬</div><div><strong>#Reels</strong><span>Short videos</span></div></div>
+      <div class="trend"><div class="trend-icon">✨</div><div><strong>#CreatorLife</strong><span>Creative community</span></div></div>
+    </div>
+    <div class="panel-card small muted">Respect creators. Share responsibly. Be kind.</div>
+  </aside>
 </div>
 
 <nav class="bottom-nav">
-  <button class="navbtn active" onclick="showFeed()"><b>⌂</b>Home</button>
-  <button class="navbtn" onclick="openPanel('searchPanel')"><b>⌕</b>Discover</button>
-  <button class="navbtn" onclick="openUpload()"><b class="nav-upload">＋</b>Create</button>
-  <button class="navbtn" onclick="openPanel('inboxPanel')"><b>♡</b>Inbox</button>
-  <button class="navbtn" onclick="openPanel('profilePanel')"><b>♙</b>Profile</button>
+  <button class="active" data-page="home" onclick="navigate('home')"><b>⌂</b><span data-i18n="home">Home</span></button>
+  <button data-page="discover" onclick="navigate('discover')"><b>⌕</b><span data-i18n="discover">Discover</span></button>
+  <button data-page="upload" onclick="navigate('upload')"><b class="create">＋</b><span data-i18n="create">Create</span></button>
+  <button data-page="inbox" onclick="navigate('inbox')"><b>▤</b><span data-i18n="inbox">Inbox</span></button>
+  <button data-page="profile" onclick="navigate('profile')"><b>◉</b><span data-i18n="profile">Profile</span></button>
 </nav>
-
-<section class="panel" id="authPanel">
-  <div class="panel-head"><h2>🐍 KING COBRIX Account</h2><button class="close" onclick="closePanels()">×</button></div>
-  <div class="panel-body">
-    <div class="auth-logo">🐍</div>
-    <h2 style="text-align:center;color:#f5c542">Welcome to KING COBRIX</h2>
-    <p class="muted" style="text-align:center">اکاؤنٹ بنائیں یا اپنے اکاؤنٹ میں لاگ اِن کریں۔</p>
-
-    <div id="authForms">
-      <label>آپ کا نام (صرف نئے اکاؤنٹ کے لیے)</label>
-      <input id="authName" class="field" maxlength="40" autocomplete="name" placeholder="اپنا نام لکھیں">
-      <label>Email</label>
-      <input id="authEmail" class="field" type="email" autocomplete="email" placeholder="example@email.com">
-      <label>Password (کم از کم 6 حروف)</label>
-      <input id="authPassword" class="field" type="password" autocomplete="current-password" minlength="6" placeholder="اپنا پاس ورڈ لکھیں">
-      <button class="primary" id="signupBtn" onclick="kcSignUp()">📝 نیا اکاؤنٹ بنائیں</button>
-      <button class="primary" id="loginBtn" onclick="kcLogin()">🔐 Login کریں</button>
-      <button class="secondary" style="width:100%;margin-top:8px" id="googleBtn" onclick="kcGoogleLogin()">🔵 Google سے Login</button>
-      <button class="secondary" style="width:100%;margin-top:8px" onclick="kcResetPassword()">پاس ورڈ بھول گئے؟</button>
-    </div>
-
-    <div id="signedInBox" style="display:none">
-      <div class="auth-note">
-        <p style="color:#f5c542;font-weight:bold">آپ لاگ اِن ہیں ✅</p>
-        <p id="authStatus" class="muted"></p>
-      </div>
-      <button class="primary" onclick="closePanels();openPanel('profilePanel')">میرا پروفائل</button>
-      <button class="secondary" style="width:100%" onclick="kcLogout()">Logout کریں</button>
-    </div>
-    <p id="authMessage" class="muted" role="status" aria-live="polite"></p>
-    <p class="muted">نوٹ: اپنا پاس ورڈ کسی کے ساتھ شیئر نہ کریں۔</p>
-  </div>
-</section>
-
-<section class="panel" id="uploadPanel">
-  <div class="panel-head"><h2>＋ نئی ویڈیو</h2><button class="close" onclick="closePanels()">×</button></div>
-  <div class="panel-body">
-    <label class="file-label" for="cameraFile"><div style="font-size:42px">🎬</div><b>فون سے ویڈیو منتخب کریں</b><p class="muted">MP4، MOV یا فون کی ویڈیو</p></label>
-    <input id="cameraFile" type="file" accept="video/*">
-    <video id="uploadPreview" controls playsinline></video>
-    <label for="captionInput">ویڈیو کا کیپشن</label>
-    <textarea id="captionInput" class="field" rows="3" maxlength="300" placeholder="اپنی ویڈیو کے بارے میں لکھیں..."></textarea>
-    <label for="creatorInput">آپ کا نام</label>
-    <input id="creatorInput" class="field" maxlength="40" placeholder="مثلاً King Cobrix">
-    <button class="primary" onclick="publishVideo()">ویڈیو فیڈ میں شامل کریں</button>
-    <p class="muted">اس ورژن میں ویڈیو صرف اسی براؤزر کے سیشن میں شامل ہوتی ہے؛ دوسرے صارفین اسے نہیں دیکھ سکتے۔</p>
-  </div>
-</section>
-
-<section class="panel" id="searchPanel">
-  <div class="panel-head"><h2>🔎 Discover</h2><button class="close" onclick="closePanels()">×</button></div>
-  <div class="panel-body">
-    <input id="searchInput" class="field" placeholder="ویڈیو یا کریئیٹر تلاش کریں..." oninput="searchVideos()">
-    <div id="searchResults"></div>
-    <p class="muted">یہ تلاش اس ڈیمو میں موجود ویڈیوز تک محدود ہے۔</p>
-  </div>
-</section>
-
-<section class="panel" id="commentsPanel">
-  <div class="panel-head"><h2>💬 کمنٹس</h2><button class="close" onclick="closePanels()">×</button></div>
-  <div id="commentsList" class="panel-body"></div>
-  <div style="padding:12px;border-top:1px solid #333">
-    <input id="commentInput" class="field" placeholder="اپنا کمنٹ لکھیں..." maxlength="300">
-    <button class="primary" onclick="sendComment()">کمنٹ بھیجیں</button>
-  </div>
-</section>
-
-<section class="panel" id="profilePanel">
-  <div class="panel-head"><h2>👤 میرا پروفائل</h2><button class="close" onclick="closePanels()">×</button></div>
-  <div class="panel-body">
-    <div class="profile-head"><div class="profile-avatar">🐍</div><h2 id="profileName">KING COBRIX</h2><p id="profileEmail" class="muted">ابھی لاگ اِن نہیں</p><p class="muted" id="profileHandle">@kingcobrix</p></div>
-    <div class="stats"><div><b id="myVideoCount">0</b>Videos</div><div><b id="myLikeCount">0</b>Likes</div><div><b id="followingCount">0</b>Following</div></div>
-    <div id="profileAuthButtons">
-      <button class="primary" onclick="openAuthPanel()">Login / Sign Up</button>
-    </div>
-    <label>اپنا نام تبدیل کریں</label>
-    <input id="profileNameInput" class="field" maxlength="40" placeholder="اپنا نام لکھیں">
-    <button class="primary" onclick="saveProfile()">پروفائل نام محفوظ کریں</button>
-    <h3 style="color:#f5c542">آپ کی ویڈیوز</h3>
-    <div id="myVideos"></div>
-    <p class="muted">لاگ اِن اکاؤنٹ Firebase میں محفوظ ہے، لیکن ویڈیوز اور Likes ابھی سرور پر محفوظ نہیں ہوتے۔</p>
-  </div>
-</section>
-
-<section class="panel" id="inboxPanel">
-  <div class="panel-head"><h2>♡ Inbox</h2><button class="close" onclick="closePanels()">×</button></div>
-  <div class="panel-body"><h3>KING COBRIX میں خوش آمدید!</h3><p class="muted">یہ ڈیمو ان باکس ہے۔ حقیقی نوٹیفکیشن اور میسجنگ کے لیے ڈیٹا بیس اور سرور درکار ہوں گے۔</p></div>
-</section>
-
-<div id="toast"></div>
 </div>
 
-<script>
-const $ = id => document.getElementById(id);
-const sampleVideos = [
- {id:'demo1',src:'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',name:'KING COBRIX',caption:'🐍 Welcome to KING COBRIX! ہماری ویڈیو کمیونٹی میں خوش آمدید۔ #kingcobrix',music:'Original Sound',likes:0,liked:false,following:false,comments:[],demo:true},
- {id:'demo2',src:'https://www.w3schools.com/html/mov_bbb.mp4',name:'COBRIX CREATOR',caption:'🎬 ویڈیوز دیکھیں، اپنی تخلیقی صلاحیت دکھائیں اور مزہ کریں! #videos',music:'Creator Sound',likes:0,liked:false,following:false,comments:[],demo:true}
-];
-let videos = [...sampleVideos];
-let activeCommentsId = null;
-let myName = localStorage.getItem('kc_name') || 'KING COBRIX';
-let myUploads = 0;
-let following = new Set();
-let uploadObjectUrl = null;
-let observer = null;
+<div class="modal-backdrop" id="authModal">
+  <div class="modal">
+    <div class="modal-head"><h2>♛ KING COBRIX</h2><button class="close" onclick="closeModal('authModal')">×</button></div>
+    <p data-i18n="authText">Sign in securely with your Google account to create your profile and interact with the community.</p>
+    <button class="google-btn" id="googleLogin"><span class="google-letter">G</span><span data-i18n="continueGoogle">Continue with Google</span></button>
+    <div class="error" id="authError"></div>
+    <p class="small">By continuing, you agree to use the platform respectfully. Do not share private information publicly.</p>
+  </div>
+</div>
 
-function toast(msg){
- const el=$('toast');el.textContent=msg;el.style.display='block';
- clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>el.style.display='none',3000);
-}
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function renderFeed(){
- if(observer)observer.disconnect();
- const feed=$('feed');
- feed.innerHTML='';
- $('emptyState').style.display=videos.length?'none':'grid';
- videos.forEach(v=>{
-  const card=document.createElement('article');
-  card.className='video-card';card.dataset.id=v.id;
-  card.innerHTML=`
-   <video src="${escapeHTML(v.src)}" loop playsinline preload="metadata"></video>
-   <div class="video-overlay">
-    <div class="video-info">
-     <div class="creator">@${escapeHTML(v.name)} <span class="verified">✦</span></div>
-     <div class="caption">${escapeHTML(v.caption)}</div>
-     <div class="music">♫ ${escapeHTML(v.music)}</div>
-    </div>
-    <div class="side-actions">
-     <div class="avatar">🐍</div>
-     <button class="action ${v.liked?'liked':''}" data-action="like"><span class="symbol">${v.liked?'♥':'♡'}</span><span>${v.likes}</span></button>
-     <button class="action ${v.following?'following':''}" data-action="follow"><span class="symbol">${v.following?'✓':'⊕'}</span><span>${v.following?'Following':'Follow'}</span></button>
-     <button class="action" data-action="comments"><span class="symbol">▢</span><span>${v.comments.length} Comments</span></button>
-     <button class="action" data-action="share"><span class="symbol">➤</span><span>Share</span></button>
-     <button class="action" data-action="sound"><span class="symbol">♫</span><span>Sound</span></button>
-    </div>
-    <div class="sound-disc">🐍</div>
-    <div class="progress"><span></span></div>
-   </div>`;
-  card.addEventListener('click',e=>{
-   const btn=e.target.closest('[data-action]');
-   if(btn){e.stopPropagation();handleAction(v.id,btn.dataset.action,card);return;}
-   const vid=card.querySelector('video');
-   if(vid.paused)vid.play().catch(()=>toast('ویڈیو چلانے کے لیے دوبارہ دبائیں'));else vid.pause();
-  });
-  const vid=card.querySelector('video');
-  vid.addEventListener('timeupdate',()=>{
-   const bar=card.querySelector('.progress span');
-   if(bar&&vid.duration)bar.style.width=(vid.currentTime/vid.duration*100)+'%';
-  });
-  feed.appendChild(card);
- });
- observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-   const vid=entry.target.querySelector('video');
-   if(entry.isIntersecting&&entry.intersectionRatio>=.65){
-    document.querySelectorAll('.video-card video').forEach(other=>{if(other!==vid)other.pause()});
-    vid.play().catch(()=>{});
-   }else vid.pause();
-  });
- },{root:feed,threshold:[.2,.65,.9]});
- document.querySelectorAll('.video-card').forEach(c=>observer.observe(c));
- updateProfile();
-}
-function handleAction(id,action,card){
- const v=videos.find(x=>x.id===id);if(!v)return;
- if(action==='like'){v.liked=!v.liked;v.likes=Math.max(0,v.likes+(v.liked?1:-1));renderFeed();}
- if(action==='follow'){v.following=!v.following;if(v.following)following.add(v.name);else following.delete(v.name);renderFeed();}
- if(action==='comments'){activeCommentsId=id;renderComments();}
- if(action==='share'){
-  const text=`${v.name}: ${v.caption}`;
-  if(navigator.share)navigator.share({title:'KING COBRIX',text,url:location.href}).catch(()=>{});
-  else if(navigator.clipboard)navigator.clipboard.writeText(text+' '+location.href).then(()=>toast('شیئر لنک کاپی ہوگیا')).catch(()=>toast(text));
-  else toast(text);
- }
- if(action==='sound'){
-  const vid=card.querySelector('video');vid.muted=!vid.muted;
-  toast(vid.muted?'آواز بند ہے':'آواز آن ہے');
- }
-}
-function openPanel(id){
- closePanels();$(id).classList.add('open');
- if(id==='profilePanel')updateProfile();
- if(id==='searchPanel')searchVideos();
-}
-function closePanels(){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('open'))}
-function showFeed(){closePanels();$('feed').scrollTo({top:0,behavior:'smooth'})}
-function openUpload(){openPanel('uploadPanel')}
-function openAuthPanel(){openPanel('authPanel');if(window.kcUpdateAuthUI)window.kcUpdateAuthUI()}
-$('cameraFile').addEventListener('change',e=>{
- const file=e.target.files[0];if(!file)return;
- if(!file.type.startsWith('video/')){toast('براہ کرم ویڈیو فائل منتخب کریں');return}
- if(uploadObjectUrl)URL.revokeObjectURL(uploadObjectUrl);
- uploadObjectUrl=URL.createObjectURL(file);
- $('uploadPreview').src=uploadObjectUrl;$('uploadPreview').style.display='block';
-});
-function publishVideo(){
- const file=$('cameraFile').files[0];
- if(!file){toast('پہلے فون سے ویڈیو منتخب کریں');return}
- const caption=$('captionInput').value.trim()||'میری نئی ویڈیو! #kingcobrix';
- const name=$('creatorInput').value.trim()||myName;
- videos.unshift({id:'local'+Date.now(),src:uploadObjectUrl,name,caption,music:'Original Sound',likes:0,liked:false,following:false,comments:[],demo:false});
- myUploads++;uploadObjectUrl=null;
- $('cameraFile').value='';$('uploadPreview').removeAttribute('src');$('uploadPreview').style.display='none';$('captionInput').value='';
- closePanels();renderFeed();$('feed').scrollTo({top:0,behavior:'smooth'});
- toast('ویڈیو اس سیشن کی فیڈ میں شامل ہوگئی');
-}
-function renderComments(){
- const v=videos.find(x=>x.id===activeCommentsId);if(!v)return;
- openPanel('commentsPanel');
- $('commentsList').innerHTML=v.comments.length?v.comments.map(c=>`<div class="comment"><strong>${escapeHTML(c.name)}</strong><p>${escapeHTML(c.text)}</p></div>`).join(''):'<p class="muted">ابھی کوئی کمنٹ نہیں۔ پہلا کمنٹ آپ کریں!</p>';
-}
-function sendComment(){
- const text=$('commentInput').value.trim();if(!text)return toast('پہلے کمنٹ لکھیں');
- const v=videos.find(x=>x.id===activeCommentsId);if(!v)return;
- v.comments.push({name:myName,text});$('commentInput').value='';renderComments();toast('کمنٹ شامل ہوگیا');
-}
-function searchVideos(){
- const q=($('searchInput').value||'').trim().toLowerCase();
- const list=videos.filter(v=>(v.caption+' '+v.name).toLowerCase().includes(q));
- $('searchResults').innerHTML=list.length?list.map(v=>`<div class="search-result" onclick="playSearched('${v.id}')"><b>🐍 @${escapeHTML(v.name)}</b><p>${escapeHTML(v.caption)}</p><small>${v.likes} likes · ${v.comments.length} comments</small></div>`).join(''):'<p class="muted">کوئی نتیجہ نہیں ملا۔</p>';
-}
-function playSearched(id){
- closePanels();const card=document.querySelector(`[data-id="${id}"]`);
- if(card){card.scrollIntoView({behavior:'smooth'});const vid=card.querySelector('video');vid.play().catch(()=>{});}
-}
-function saveProfile(){
- const name=$('profileNameInput').value.trim();if(!name)return toast('اپنا نام لکھیں');
- myName=name;localStorage.setItem('kc_name',myName);
- if(window.kcUpdateDisplayName)window.kcUpdateDisplayName(name);
- updateProfile();toast('پروفائل نام محفوظ ہوگیا');
-}
-function updateProfile(){
- if(!$('profileName'))return;
- $('profileName').textContent=myName;
- $('profileNameInput').value=myName;
- $('myVideoCount').textContent=videos.filter(v=>!v.demo).length;
- $('myLikeCount').textContent=videos.filter(v=>!v.demo).reduce((a,v)=>a+v.likes,0);
- $('followingCount').textContent=following.size;
- $('myVideos').innerHTML=videos.filter(v=>!v.demo).map(v=>`<div class="search-result"><b>${escapeHTML(v.caption)}</b><p>${v.likes} Likes · ${v.comments.length} Comments</p></div>`).join('')||'<p class="muted">آپ نے ابھی کوئی ویڈیو اپلوڈ نہیں کی۔</p>';
-}
-renderFeed();
-</script>
+<div class="modal-backdrop" id="profileModal">
+  <div class="modal">
+    <div class="modal-head"><h2 data-i18n="editProfile">Edit profile</h2><button class="close" onclick="closeModal('profileModal')">×</button></div>
+    <form id="editProfileForm">
+      <div class="field"><label data-i18n="displayName">Display name</label><input id="editName" maxlength="60" required></div>
+      <div class="field"><label>Username</label><input id="editUsername" maxlength="24" minlength="3" pattern="[A-Za-z0-9_.]+" placeholder="your_username" required></div>
+      <div class="field"><label>Bio</label><textarea id="editBio" maxlength="160" placeholder="Tell the world about yourself"></textarea></div>
+      <div class="field"><label>Profile photo URL (optional)</label><input id="editPhoto" type="url" placeholder="https://..."></div>
+      <button class="primary" type="submit" style="width:100%" data-i18n="saveChanges">Save changes</button>
+      <div class="error" id="profileError"></div>
+    </form>
+  </div>
+</div>
 
-<!-- Firebase Authentication -->
+<div class="modal-backdrop" id="commentModal">
+  <div class="modal">
+    <div class="modal-head"><h2 data-i18n="comments">Comments</h2><button class="close" onclick="closeModal('commentModal')">×</button></div>
+    <div id="commentList"></div>
+    <form id="commentForm" class="comment-form"><input id="commentInput" maxlength="300" placeholder="Add a comment..." required><button class="primary" type="submit">➤</button></form>
+    <div class="error" id="commentError"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
- getAuth,
- createUserWithEmailAndPassword,
- signInWithEmailAndPassword,
- GoogleAuthProvider,
- signInWithPopup,
- onAuthStateChanged,
- signOut,
- updateProfile as firebaseUpdateProfile,
- sendPasswordResetEmail
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+  getRedirectResult, onAuthStateChanged, signOut, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc,
+  getDocs, query, where, orderBy, limit, serverTimestamp, onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+/* Your KING COBRIX Firebase project */
 const firebaseConfig = {
- apiKey: "AIzaSyBnQsB-ZrUf53iaqRxIrJ1xpFdLK4hU-BA",
- authDomain: "king-cobrix.firebaseapp.com",
- projectId: "king-cobrix",
- storageBucket: "king-cobrix.firebasestorage.app",
- messagingSenderId: "339495195939",
- appId: "1:339495195939:web:da3645cea388c241bfe896"
+  apiKey: "AIzaSyBnQsB-ZrUf53iaqRxIrJ1xpFdLK4hU-BA",
+  authDomain: "king-cobrix.firebaseapp.com",
+  projectId: "king-cobrix",
+  storageBucket: "king-cobrix.firebasestorage.app",
+  messagingSenderId: "339495195939",
+  appId: "1:339495195939:web:da3645cea388c241bfe896"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
 
-function authMessage(message,isError=false){
- const el=document.getElementById('authMessage');
- el.textContent=message;
- el.style.color=isError?'#ff7b7b':'#f5c542';
+const $ = id => document.getElementById(id);
+let currentUser = null;
+let myProfile = null;
+let currentPage = "home";
+let activeCommentVideo = null;
+let allVideos = [];
+let localVideos = [];
+let followed = new Set();
+let liked = new Set();
+let feedMode = "forYou";
+let currentLang = localStorage.getItem("kc_language") || "en";
+let userDocUnsub = null;
+
+const words = {
+  en:{
+    home:"Home",discover:"Discover",create:"Create",notifications:"Notifications",
+    inbox:"Inbox",profile:"Profile",settings:"Settings",search:"Search",
+    yourAccount:"Your account",posts:"Posts",followers:"Followers",following:"Following",
+    viewProfile:"View profile",trending:"Trending now",forYou:"For You",followingTab:"Following",
+    welcome:"Your next favorite creator is here.",subtitle:"Discover short videos from the community.",
+    noVideos:"Your feed is waiting",noVideosText:"Sign in, follow creators, or upload a video to get started.",
+    signIn:"Sign in",editProfile:"Edit profile",displayName:"Display name",saveChanges:"Save changes",
+    authText:"Sign in securely with your Google account to create your profile and interact with the community.",
+    continueGoogle:"Continue with Google",comments:"Comments",noComments:"No comments yet. Start the conversation!",
+    uploadTitle:"Create a video",uploadText:"Choose a video from your device and add a caption.",
+    chooseVideo:"Choose video",caption:"Write a caption",publish:"Publish video",
+    localNotice:"Local preview: this video is visible only in this browser session until video hosting is configured.",
+    settingsTitle:"Settings & privacy",language:"App language",english:"English",urdu:"اردو",
+    account:"Account",signOut:"Sign out",profileViewer:"Creator profile",bioEmpty:"No bio yet.",
+    videos:"Videos",noProfileVideos:"No public videos yet.",searchPlaceholder:"Search creators or captions...",
+    noResults:"No results found.",guest:"Guest Creator",notSigned:"Sign in to access your profile.",
+    follow:"Follow",followingBtn:"Following",share:"Share",liked:"Liked",like:"Like",
+    uploadRequired:"Please choose a video first.",captionRequired:"Please write a caption.",
+    signInFirst:"Please sign in with Google first.",saved:"Profile saved.",uploadDone:"Video added to your local feed.",
+    firestoreSaved:"Video details saved to your account database. Video file hosting is not connected yet.",
+    noNotifications:"Notifications will appear here when connected features generate activity.",
+    noInbox:"Inbox is ready for a future messaging integration.",
+    settingsNote:"Manage your profile, language, and account session.",
+    signOutConfirm:"Sign out of KING COBRIX?",viewAll:"View all",shareCopied:"Share link copied.",
+    authFailed:"Google sign-in failed. Check Firebase Authentication settings and authorized domains.",
+    commentsFailed:"Could not load comments. Check Firestore rules.",
+    search:"Search",playHint:"Tap video to play or pause"
+  },
+  ur:{
+    home:"ہوم",discover:"دریافت",create:"ویڈیو بنائیں",notifications:"اطلاعات",
+    inbox:"ان باکس",profile:"پروفائل",settings:"سیٹنگز",search:"تلاش",
+    yourAccount:"آپ کا اکاؤنٹ",posts:"پوسٹس",followers:"فالوورز",following:"فالوونگ",
+    viewProfile:"پروفائل دیکھیں",trending:"ٹرینڈنگ",forYou:"آپ کے لیے",followingTab:"فالوونگ",
+    welcome:"اپنے پسندیدہ کریئیٹرز کی ویڈیوز دیکھیں۔",subtitle:"کمیونٹی کی مختصر ویڈیوز دریافت کریں۔",
+    noVideos:"آپ کی فیڈ تیار ہے",noVideosText:"شروع کرنے کے لیے Google سے لاگ اِن کریں یا ویڈیو شامل کریں۔",
+    signIn:"لاگ اِن",editProfile:"پروفائل تبدیل کریں",displayName:"نام",saveChanges:"محفوظ کریں",
+    authText:"اپنا اکاؤنٹ بنانے اور کمیونٹی کے ساتھ رابطے کے لیے Google سے لاگ اِن کریں۔",
+    continueGoogle:"Google کے ساتھ جاری رکھیں",comments:"تبصرے",noComments:"ابھی کوئی تبصرہ نہیں۔",
+    uploadTitle:"ویڈیو شامل کریں",uploadText:"اپنے موبائل سے ویڈیو منتخب کریں اور کیپشن لکھیں۔",
+    chooseVideo:"ویڈیو منتخب کریں",caption:"ویڈیو کا تعارف لکھیں",publish:"ویڈیو شائع کریں",
+    localNotice:"یہ ویڈیو فی الحال صرف اسی براؤزر میں دکھائی دے گی۔ مستقل ویڈیو ہوسٹنگ ابھی منسلک نہیں۔",
+    settingsTitle:"سیٹنگز اور پرائیویسی",language:"ایپ کی زبان",english:"English",urdu:"اردو",
+    account:"اکاؤنٹ",signOut:"لاگ آؤٹ",profileViewer:"کریئیٹر پروفائل",bioEmpty:"ابھی تعارف موجود نہیں۔",
+    videos:"ویڈیوز",noProfileVideos:"ابھی کوئی عوامی ویڈیو نہیں۔",searchPlaceholder:"کریئیٹر یا کیپشن تلاش کریں...",
+    noResults:"کوئی نتیجہ نہیں ملا۔",guest:"مہمان کریئیٹر",notSigned:"اپنی پروفائل کے لیے Google سے لاگ اِن کریں۔",
+    follow:"فالو کریں",followingBtn:"فالو ہو رہا ہے",share:"شیئر",liked:"پسند کیا",like:"لائک",
+    uploadRequired:"پہلے ویڈیو منتخب کریں۔",captionRequired:"ویڈیو کا تعارف لکھیں۔",
+    signInFirst:"پہلے Google سے لاگ اِن کریں۔",saved:"پروفائل محفوظ ہوگئی۔",uploadDone:"ویڈیو عارضی فیڈ میں شامل ہوگئی۔",
+    firestoreSaved:"ویڈیو کی معلومات ڈیٹابیس میں محفوظ ہوئیں؛ ویڈیو فائل کی ہوسٹنگ ابھی منسلک نہیں۔",
+    noNotifications:"نئی سرگرمی کی اطلاعات یہاں دکھائی جائیں گی۔",
+    noInbox:"ان باکس انٹرفیس تیار ہے؛ میسجنگ ابھی منسلک نہیں۔",
+    settingsNote:"پروفائل، زبان اور اکاؤنٹ کی سیٹنگز تبدیل کریں۔",
+    signOutConfirm:"کیا آپ لاگ آؤٹ کرنا چاہتے ہیں؟",viewAll:"سب دیکھیں",shareCopied:"شیئر لنک کاپی ہوگیا۔",
+    authFailed:"Google لاگ اِن نہیں ہوا۔ Firebase کی سیٹنگز چیک کریں۔",
+    commentsFailed:"تبصرے لوڈ نہیں ہوئے۔ Firestore Rules چیک کریں۔",
+    search:"تلاش",playHint:"ویڈیو چلانے یا روکنے کے لیے دبائیں"
+  }
+};
+function t(key){return (words[currentLang]||words.en)[key]||words.en[key]||key}
+function applyLanguage(){
+  document.documentElement.lang=currentLang==="ur"?"ur":"en";
+  document.documentElement.dir="ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key=el.dataset.i18n;
+    if(words[currentLang][key])el.textContent=words[currentLang][key];
+  });
+  document.querySelectorAll("[data-page]").forEach(el=>{});
+  if(currentPage)renderPage();
 }
-function friendlyError(error){
- const codes={
-  'auth/email-already-in-use':'یہ ای میل پہلے سے رجسٹر ہے۔ Login کریں۔',
-  'auth/invalid-email':'ای میل درست نہیں ہے۔',
-  'auth/weak-password':'پاس ورڈ کمزور ہے؛ کم از کم 6 حروف لکھیں۔',
-  'auth/invalid-credential':'ای میل یا پاس ورڈ درست نہیں۔',
-  'auth/user-not-found':'یہ اکاؤنٹ نہیں ملا؛ پہلے Sign Up کریں۔',
-  'auth/wrong-password':'پاس ورڈ درست نہیں۔',
-  'auth/popup-closed-by-user':'Google Login ونڈو بند ہوگئی۔ دوبارہ کوشش کریں۔',
-  'auth/popup-blocked':'براؤزر نے Google Login ونڈو روک دی۔ دوبارہ کوشش کریں۔',
-  'auth/unauthorized-domain':'Firebase میں GitHub Pages ڈومین Authorized Domains میں شامل کریں۔',
-  'auth/network-request-failed':'انٹرنیٹ چیک کرکے دوبارہ کوشش کریں۔',
-  'auth/too-many-requests':'بہت زیادہ کوششیں ہوئیں؛ کچھ دیر بعد دوبارہ کوشش کریں۔',
-  'auth/operation-not-allowed':'Firebase Authentication میں یہ Login طریقہ فعال کریں۔'
+function toast(message){
+  const el=$("toast");el.textContent=message;el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),2600);
+}
+function showModal(id){$(id).classList.add("show")}
+window.closeModal=id=>$(id).classList.remove("show");
+window.openAuth=()=>showModal("authModal");
+function esc(s=""){
+  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function avatarHTML(profile,sizeClass=""){
+  const photo=profile?.photoURL||profile?.photo||"";
+  const name=profile?.displayName||profile?.name||"K";
+  return `<div class="avatar ${sizeClass}">${photo?`<img src="${esc(photo)}" alt="" referrerpolicy="no-referrer">`:esc(name.slice(0,1).toUpperCase())}</div>`;
+}
+function fmt(n){return Number(n||0).toLocaleString()}
+function signedIn(){if(!currentUser){openAuth();return false}return true}
+function updateSide(){
+  const p=myProfile||{};
+  $("sideAvatar").innerHTML=p.photoURL||p.photo?`<img src="${esc(p.photoURL||p.photo)}" alt="">`:esc((p.displayName||currentUser?.displayName||"K").slice(0,1).toUpperCase());
+  $("sideName").textContent=p.displayName||currentUser?.displayName||t("guest");
+  $("sideHandle").textContent="@"+(p.username||"guest");
+  $("sidePosts").textContent=fmt(allVideos.filter(v=>v.userId===currentUser?.uid).length);
+  $("sideFollowers").textContent=fmt(p.followersCount||0);
+  $("sideFollowing").textContent=fmt(p.followingCount||0);
+  $("topAccount").textContent=currentUser?(p.displayName||currentUser.displayName||"Account"):t("signIn");
+}
+window.navigate=page=>{
+  if(page==="upload"&&!signedIn())return;
+  if(page==="profile"&&!currentUser){openAuth();return}
+  currentPage=page;
+  document.querySelectorAll(".navitem,.bottom-nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+  renderPage();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+function emptyState(icon,title,text,button=""){
+  return `<div class="empty-state"><div class="big">${icon}</div><h3>${esc(title)}</h3><p>${esc(text)}</p>${button}</div>`;
+}
+function renderPage(){
+  const root=$("mainContent");
+  if(currentPage==="home")root.innerHTML=renderHome();
+  else if(currentPage==="discover")root.innerHTML=renderDiscover();
+  else if(currentPage==="upload")root.innerHTML=renderUpload();
+  else if(currentPage==="profile")root.innerHTML=renderProfile();
+  else if(currentPage==="settings")root.innerHTML=renderSettings();
+  else if(currentPage==="notifications")root.innerHTML=renderNotifications();
+  else if(currentPage==="inbox")root.innerHTML=renderInbox();
+  else root.innerHTML=renderHome();
+  updateSide();
+  attachPageEvents();
+}
+function renderStories(){
+  const profiles=new Map();
+  allVideos.forEach(v=>{if(v.userId)profiles.set(v.userId,v)});
+  let html=`<div class="story" onclick="navigate('upload')"><div class="story-ring"><div class="placeholder">＋</div></div><div class="story-name">Your story</div></div>`;
+  [...profiles.values()].slice(0,10).forEach(v=>{
+    html+=`<div class="story" onclick="viewCreator('${esc(v.userId)}')"><div class="story-ring"><div class="placeholder">${esc((v.displayName||"C").slice(0,1).toUpperCase())}</div></div><div class="story-name">${esc(v.username||v.displayName||"Creator")}</div></div>`;
+  });
+  return html;
+}
+function renderHome(){
+  let videos=[...localVideos,...allVideos];
+  if(feedMode==="following")videos=videos.filter(v=>followed.has(v.userId)||v.userId===currentUser?.uid);
+  const cards=videos.map(renderVideoCard).join("");
+  return `<div class="section-heading"><div><h1>${t("home")}</h1><p>${t("subtitle")}</p></div><button class="icon-btn" onclick="navigate('discover')">⌕</button></div>
+    <div class="story-strip">${renderStories()}</div>
+    <div class="feed-tabs"><button class="feed-tab ${feedMode==="forYou"?"active":""}" onclick="setFeed('forYou')">${t("forYou")}</button><button class="feed-tab ${feedMode==="following"?"active":""}" onclick="setFeed('following')">${t("followingTab")}</button></div>
+    ${cards||emptyState("🎬",t("noVideos"),t("noVideosText"),`<button class="primary" onclick="openAuth()">${t("signIn")}</button>`)}`;
+}
+window.setFeed=mode=>{feedMode=mode;renderPage()};
+function renderVideoCard(v){
+  const local=!!v.localUrl;
+  const isLiked=liked.has(v.id);
+  const isFollowing=followed.has(v.userId);
+  return `<article class="video-card" data-video-card="${esc(v.id)}">
+    <div class="video-head">
+      ${avatarHTML({displayName:v.displayName,photoURL:v.photoURL})}
+      <div style="min-width:0"><div class="creator-name" role="button" tabindex="0" onclick="viewCreator('${esc(v.userId||"")}')">${esc(v.displayName||"KING COBRIX Creator")}</div><div class="creator-handle">@${esc(v.username||"creator")}</div></div>
+      ${v.userId&&v.userId!==currentUser?.uid?`<button class="follow-btn" onclick="toggleFollow('${esc(v.userId)}')">${isFollowing?t("followingBtn"):t("follow")}</button>`:""}
+      <button class="icon-btn" style="margin-left:0" onclick="shareVideo('${esc(v.id)}')">⋯</button>
+    </div>
+    <div class="video-stage">
+      <video src="${esc(v.localUrl||v.videoUrl||"")}" ${local?"":"poster=\"\""} playsinline loop preload="metadata" controlslist="nodownload" data-playvideo="${esc(v.id)}"></video>
+      <div class="video-gradient"></div>
+      <div class="video-info"><h3>${esc(v.displayName||"Creator")}</h3><p>${esc(v.caption||"")}</p></div>
+      <div class="video-actions">
+        <button class="action ${isLiked?"liked":""}" onclick="toggleLike('${esc(v.id)}')"><span class="symbol">${isLiked?"♥":"♡"}</span><span class="count">${fmt((v.likesCount||0)+(isLiked?1:0))}</span></button>
+        <button class="action" onclick="openComments('${esc(v.id)}')"><span class="symbol">▢</span><span class="count">${fmt(v.commentsCount||0)}</span></button>
+        <button class="action" onclick="shareVideo('${esc(v.id)}')"><span class="symbol">↗</span><span class="count">${t("share")}</span></button>
+        <button class="action" onclick="toggleMute(this)"><span class="symbol">♫</span><span class="count">Sound</span></button>
+        <button class="action" onclick="viewCreator('${esc(v.userId||"")}')">${avatarHTML({displayName:v.displayName,photoURL:v.photoURL})}</button>
+      </div>
+    </div>
+    <div class="video-bottom"><div class="caption">${esc(v.caption||"")}</div><div class="video-meta"><span>♬ Original sound · ${esc(v.username||"creator")}</span><span>${local?"Local preview":"KING COBRIX"}</span></div><div class="progress"><i data-progress="${esc(v.id)}"></i></div></div>
+  </article>`;
+}
+function renderDiscover(){
+ return `<div class="section-heading"><div><h1>${t("discover")}</h1><p>Find creators and videos.</p></div></div>
+ <div class="page-panel"><div class="search-box"><input id="searchQuery" placeholder="${t("searchPlaceholder")}"><button class="primary" id="searchButton">⌕ ${t("search")}</button></div><div id="searchResults">${renderSearchResults("")}</div></div>`;
+}
+function renderSearchResults(q){
+ const queryText=(q||"").trim().toLowerCase();
+ const results=[...localVideos,...allVideos].filter(v=>!queryText||(v.caption||"").toLowerCase().includes(queryText)||(v.username||"").toLowerCase().includes(queryText)||(v.displayName||"").toLowerCase().includes(queryText));
+ if(!results.length)return emptyState("⌕",t("noResults"),"Try another keyword.");
+ return `<div class="grid-videos">${results.map(v=>`<div class="grid-tile" onclick="navigate('home')"><video src="${esc(v.localUrl||v.videoUrl)}" muted playsinline preload="metadata"></video><span>▶ ${fmt(v.likesCount||0)}</span></div>`).join("")}</div>`;
+}
+function renderUpload(){
+ if(!currentUser)return emptyState("🔐",t("signIn"),t("notSigned"),`<button class="primary" onclick="openAuth()">${t("continueGoogle")}</button>`);
+ return `<div class="section-heading"><div><h1>${t("uploadTitle")}</h1><p>${t("uploadText")}</p></div></div>
+ <div class="page-panel">
+ <form id="uploadForm">
+   <div class="field"><label>${t("chooseVideo")}</label><input id="videoFile" type="file" accept="video/*" required></div>
+   <video id="uploadPreview" class="hidden" controls playsinline style="width:100%;max-height:360px;border-radius:14px;background:#000"></video>
+   <div class="field"><label>${t("caption")}</label><textarea id="videoCaption" maxlength="1500" placeholder="Share your moment..." required></textarea></div>
+   <p>${t("localNotice")}</p>
+   <button class="primary" type="submit" style="width:100%">＋ ${t("publish")}</button>
+   <div class="error" id="uploadError"></div><div class="success" id="uploadSuccess"></div>
+ </form></div>`;
+}
+function renderProfile(){
+ if(!currentUser)return emptyState("◉",t("profile"),t("notSigned"),`<button class="primary" onclick="openAuth()">${t("continueGoogle")}</button>`);
+ const p=myProfile||{};
+ const myVideos=[...localVideos,...allVideos].filter(v=>v.userId===currentUser.uid);
+ return `<div class="page-panel" style="padding:0;overflow:hidden">
+  <div class="profile-cover"></div>
+  <div class="profile-head">${avatarHTML({displayName:p.displayName||currentUser.displayName,photoURL:p.photoURL||currentUser.photoURL})}<div style="padding-bottom:8px;min-width:0"><strong>${esc(p.displayName||currentUser.displayName||"Creator")}</strong><div class="creator-handle">@${esc(p.username||"creator")}</div></div><button class="primary" onclick="openEditProfile()">${t("editProfile")}</button></div>
+  <div class="profile-bio">${esc(p.bio||t("bioEmpty"))}</div>
+  <div class="profile-stats"><div><strong>${fmt(myVideos.length)}</strong><br><span>${t("videos")}</span></div><div><strong>${fmt(p.followersCount||0)}</strong><br><span>${t("followers")}</span></div><div><strong>${fmt(p.followingCount||0)}</strong><br><span>${t("following")}</span></div></div>
+  <div class="profile-tabs"><button class="active">▦ ${t("videos")}</button><button onclick="toast('Liked videos will appear here when enabled.')">♡ Liked</button></div>
+  ${myVideos.length?`<div class="grid-videos" style="padding:10px">${myVideos.map(v=>`<div class="grid-tile"><video src="${esc(v.localUrl||v.videoUrl)}" muted playsinline preload="metadata"></video><span>▶ ${fmt(v.likesCount||0)}</span></div>`).join("")}</div>`:emptyState("🎥",t("noProfileVideos"),t("uploadText"),`<button class="primary" onclick="navigate('upload')">${t("create")}</button>`)}
+ </div>`;
+}
+function renderSettings(){
+ return `<div class="section-heading"><div><h1>${t("settingsTitle")}</h1><p>${t("settingsNote")}</p></div></div>
+ <div class="page-panel">
+ <div class="settings-row"><div><strong>${t("language")}</strong><p>Choose your preferred app language.</p></div><select class="language-select" id="languageSelect"><option value="en" ${currentLang==="en"?"selected":""}>English</option><option value="ur" ${currentLang==="ur"?"selected":""}>اردو</option></select></div>
+ <div class="settings-row"><div><strong>${t("account")}</strong><p>${esc(currentUser?.email||"Guest")}</p></div>${currentUser?`<button class="secondary danger" onclick="logout()">${t("signOut")}</button>`:`<button class="primary" onclick="openAuth()">${t("signIn")}</button>`}</div>
+ <div class="settings-row"><div><strong>Privacy & Safety</strong><p>Never publish sensitive personal information.</p></div><span>🔒</span></div>
+ <div class="settings-row"><div><strong>App version</strong><p>KING COBRIX Web · 1.0</p></div><span class="gold">1.0</span></div>
+ </div>`;
+}
+function renderNotifications(){
+ return `<div class="section-heading"><div><h1>${t("notifications")}</h1><p>Stay up to date with your community.</p></div></div><div class="page-panel">${emptyState("♡",t("notifications"),t("noNotifications"))}</div>`;
+}
+function renderInbox(){
+ return `<div class="section-heading"><div><h1>${t("inbox")}</h1><p>Messages and conversations.</p></div></div><div class="page-panel">${emptyState("▤",t("inbox"),t("noInbox"))}<p class="small muted">Direct messaging is not connected in this version.</p></div>`;
+}
+function attachPageEvents(){
+ const searchButton=$("searchButton");
+ if(searchButton)searchButton.onclick=()=>{$("searchResults").innerHTML=renderSearchResults($("searchQuery").value)};
+ const sq=$("searchQuery");
+ if(sq)sq.onkeydown=e=>{if(e.key==="Enter")$("searchButton").click()};
+ const lang=$("languageSelect");
+ if(lang)lang.onchange=()=>{currentLang=lang.value;localStorage.setItem("kc_language",currentLang);applyLanguage()};
+ const file=$("videoFile");
+ if(file)file.onchange=()=>{
+   const f=file.files?.[0];const preview=$("uploadPreview");
+   if(f){preview.src=URL.createObjectURL(f);preview.classList.remove("hidden");}
  };
- return codes[error.code] || ('مسئلہ: '+(error.message||'دوبارہ کوشش کریں'));
+ const form=$("uploadForm");
+ if(form)form.onsubmit=uploadVideo;
+ const edit=$("editProfileForm");
+ if(edit)edit.onsubmit=saveProfile;
 }
-function setBusy(busy){
- ['signupBtn','loginBtn','googleBtn'].forEach(id=>{
-  const el=document.getElementById(id);if(el)el.disabled=busy;
- });
+window.openEditProfile=()=>{
+ if(!signedIn())return;
+ $("editName").value=myProfile?.displayName||currentUser.displayName||"";
+ $("editUsername").value=myProfile?.username||("creator_"+currentUser.uid.slice(0,6));
+ $("editBio").value=myProfile?.bio||"";
+ $("editPhoto").value=myProfile?.photoURL||currentUser.photoURL||"";
+ $("profileError").textContent="";
+ showModal("profileModal");
+};
+async function saveProfile(e){
+ e.preventDefault();
+ if(!currentUser)return;
+ const displayName=$("editName").value.trim();
+ const username=$("editUsername").value.trim().replace(/^@/,"");
+ const bio=$("editBio").value.trim();
+ const photoURL=$("editPhoto").value.trim();
+ if(!/^[A-Za-z0-9_.]{3,24}$/.test(username)){
+   $("profileError").textContent="Username must be 3–24 characters: letters, numbers, _ or .";
+   return;
+ }
+ try{
+   await updateProfile(currentUser,{displayName,photoURL:photoURL||null});
+   const data={uid:currentUser.uid,displayName,username,bio,photoURL,email:currentUser.email||"",updatedAt:serverTimestamp()};
+   await setDoc(doc(db,"users",currentUser.uid),data,{merge:true});
+   myProfile={...myProfile,...data};
+   closeModal("profileModal");toast(t("saved"));renderPage();
+ }catch(err){
+   $("profileError").textContent="Could not save profile: "+(err.message||"Check Firestore rules.");
+ }
 }
-window.kcSignUp=async function(){
- const name=document.getElementById('authName').value.trim();
- const email=document.getElementById('authEmail').value.trim();
- const password=document.getElementById('authPassword').value;
- if(!name){authMessage('نیا اکاؤنٹ بنانے کے لیے اپنا نام لکھیں۔',true);return}
- if(!email||!password){authMessage('ای میل اور پاس ورڈ دونوں لکھیں۔',true);return}
- if(password.length<6){authMessage('پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔',true);return}
- setBusy(true);authMessage('اکاؤنٹ بنایا جا رہا ہے...');
+async function uploadVideo(e){
+ e.preventDefault();
+ if(!signedIn())return;
+ const file=$("videoFile").files?.[0];
+ const caption=$("videoCaption").value.trim();
+ if(!file){$("uploadError").textContent=t("uploadRequired");return}
+ if(!caption){$("uploadError").textContent=t("captionRequired");return}
+ if(!file.type.startsWith("video/")){$("uploadError").textContent="Please select a valid video file.";return}
+ if(file.size>100*1024*1024){$("uploadError").textContent="Choose a video under 100 MB.";return}
+ $("uploadError").textContent="";
+ const localUrl=URL.createObjectURL(file);
+ const p=myProfile||{};
+ const localVideo={
+   id:"local_"+Date.now(),userId:currentUser.uid,
+   displayName:p.displayName||currentUser.displayName||"Creator",
+   username:p.username||"creator",photoURL:p.photoURL||currentUser.photoURL||"",
+   caption,localUrl,createdAt:Date.now(),likesCount:0,commentsCount:0
+ };
+ localVideos.unshift(localVideo);
  try{
-  const result=await createUserWithEmailAndPassword(auth,email,password);
-  await firebaseUpdateProfile(result.user,{displayName:name});
-  document.getElementById('authPassword').value='';
-  authMessage('اکاؤنٹ کامیابی سے بن گیا! 🎉');
- }catch(error){authMessage(friendlyError(error),true)}
- finally{setBusy(false)}
-};
-window.kcLogin=async function(){
- const email=document.getElementById('authEmail').value.trim();
- const password=document.getElementById('authPassword').value;
- if(!email||!password){authMessage('اپنی ای میل اور پاس ورڈ لکھیں۔',true);return}
- setBusy(true);authMessage('Login ہو رہا ہے...');
+   // Firestore stores video metadata only, not the video file itself.
+   // A permanent public video URL requires a configured video host.
+   await addDoc(collection(db,"videos"),{
+     userId:currentUser.uid,displayName:localVideo.displayName,
+     username:localVideo.username,photoURL:localVideo.photoURL,
+     caption,videoUrl:"",likesCount:0,commentsCount:0,
+     createdAt:serverTimestamp(),hostingStatus:"not_configured"
+   });
+   $("uploadSuccess").textContent=t("firestoreSaved");
+ }catch(err){
+   $("uploadSuccess").textContent=t("uploadDone");
+   console.warn("Video metadata was not saved to Firestore:",err);
+ }
+ toast(t("uploadDone"));
+ navigate("home");
+}
+async function loadUserProfile(uid){
+ try{const snap=await getDoc(doc(db,"users",uid));if(snap.exists())return snap.data()}
+ catch(err){console.warn("Profile read failed:",err)}
+ return {};
+}
+async function afterLogin(user){
+ currentUser=user;
+ myProfile=await loadUserProfile(user.uid);
+ if(!myProfile.username){
+   const username="creator_"+user.uid.slice(0,6);
+   myProfile={...myProfile,uid:user.uid,displayName:user.displayName||"Creator",username,bio:"",photoURL:user.photoURL||""};
+   try{await setDoc(doc(db,"users",user.uid),{
+     uid:user.uid,displayName:myProfile.displayName,username,bio:"",
+     photoURL:user.photoURL||"",email:user.email||"",createdAt:serverTimestamp()
+   },{merge:true})}catch(err){console.warn("Could not create user profile:",err)}
+ }
+ $("authError").textContent="";
+ closeModal("authModal");
+ updateSide();
+ await loadVideos();
+ currentPage="home";renderPage();
+ toast("Welcome to KING COBRIX!");
+}
+async function loadVideos(){
  try{
-  await signInWithEmailAndPassword(auth,email,password);
-  document.getElementById('authPassword').value='';
-  authMessage('Login کامیاب ہوگیا! ✅');
- }catch(error){authMessage(friendlyError(error),true)}
- finally{setBusy(false)}
+   const snap=await getDocs(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(50)));
+   const rows=[];
+   snap.forEach(d=>{
+     const v=d.data();
+     if(v.videoUrl)rows.push({id:d.id,...v});
+   });
+   allVideos=rows;
+   renderPage();
+ }catch(err){
+   console.warn("Could not load shared videos:",err);
+   // The interface still works for local previews when the feed is empty.
+ }
+}
+window.logout=async()=>{
+ if(!currentUser)return;
+ if(!confirm(t("signOutConfirm")))return;
+ try{await signOut(auth);currentUser=null;myProfile=null;allVideos=[];localVideos=[];followed.clear();liked.clear();navigate("home");toast("Signed out.")}
+ catch(err){toast("Could not sign out: "+err.message)}
 };
-window.kcGoogleLogin=async function(){
- setBusy(true);authMessage('Google Login کھولا جا رہا ہے...');
+window.toggleLike=async id=>{
+ if(!signedIn())return;
+ const wasLiked=liked.has(id);
+ if(wasLiked)liked.delete(id);else liked.add(id);
+ renderPage();
+ if(id.startsWith("local_"))return;
  try{
-  await signInWithPopup(auth,googleProvider);
-  authMessage('Google Login کامیاب ہوگیا! ✅');
- }catch(error){authMessage(friendlyError(error),true)}
- finally{setBusy(false)}
+   const ref=doc(db,"videos",id,"likes",currentUser.uid);
+   if(wasLiked){
+     // The current published rules allow deleting a user's own like.
+     const {deleteDoc}=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+     await deleteDoc(ref);
+   }else{
+     await setDoc(ref,{userId:currentUser.uid,createdAt:serverTimestamp()});
+   }
+ }catch(err){console.warn("Like write failed:",err);toast("Like could not be synced. Check Firestore rules.")}
 };
-window.kcLogout=async function(){
+window.toggleFollow=async uid=>{
+ if(!signedIn())return;
+ if(!uid||uid===currentUser.uid)return;
+ if(followed.has(uid))followed.delete(uid);else followed.add(uid);
+ renderPage();
+ toast(followed.has(uid)?"Following creator":"Unfollowed creator");
+ // Follow is currently a session-level demo; a persistent follow collection is not configured.
+};
+window.toggleMute=button=>{
+ const video=button.closest(".video-stage")?.querySelector("video");
+ if(!video)return;
+ video.muted=!video.muted;
+ button.querySelector(".symbol").textContent=video.muted?"♫":"🔊";
+};
+window.shareVideo=async id=>{
+ const url=location.origin+location.pathname+"#video-"+encodeURIComponent(id);
  try{
-  await signOut(auth);
-  authMessage('آپ Logout ہوگئے ہیں۔');
-  closePanels();toast('Logout کامیاب ہوگیا');
- }catch(error){authMessage(friendlyError(error),true)}
-};
-window.kcResetPassword=async function(){
- const email=document.getElementById('authEmail').value.trim();
- if(!email){authMessage('پہلے Email والے خانے میں اپنا ای میل لکھیں۔',true);return}
- try{
-  await sendPasswordResetEmail(auth,email);
-  authMessage('اگر اس ای میل کا اکاؤنٹ موجود ہے تو پاس ورڈ ری سیٹ کرنے کا ای میل بھیج دیا گیا ہے۔');
- }catch(error){authMessage(friendlyError(error),true)}
-};
-window.kcUpdateDisplayName=async function(name){
- if(!auth.currentUser)return;
- try{await firebaseUpdateProfile(auth.currentUser,{displayName:name})}
- catch(error){toast('نام اس براؤزر میں محفوظ ہے؛ Firebase نام اپڈیٹ نہیں ہوا۔')}
-};
-window.kcUpdateAuthUI=function(){
- const user=auth.currentUser;
- const forms=document.getElementById('authForms');
- const signed=document.getElementById('signedInBox');
- if(user){
-  forms.style.display='none';signed.style.display='block';
-  document.getElementById('authStatus').textContent=(user.displayName||'KING COBRIX')+' · '+(user.email||'Google account');
- }else{
-  forms.style.display='block';signed.style.display='none';
+   if(navigator.share)await navigator.share({title:"KING COBRIX",text:"Watch this video on KING COBRIX",url});
+   else{await navigator.clipboard.writeText(url);toast(t("shareCopied"))}
+ }catch(err){
+   try{await navigator.clipboard.writeText(url);toast(t("shareCopied"))}
+   catch{toast(url)}
  }
 };
-onAuthStateChanged(auth,user=>{
- const loginBtn=document.getElementById('topLoginBtn');
- const profileButtons=document.getElementById('profileAuthButtons');
- if(user){
-  const displayName=user.displayName||user.email?.split('@')[0]||'KING COBRIX';
-  window.kcCurrentUser=user;
-  if(user.displayName){myName=user.displayName;localStorage.setItem('kc_name',myName)}
-  loginBtn.textContent='My Account';
-  profileButtons.innerHTML='<button class="primary" onclick="openAuthPanel()">Account Settings</button><button class="secondary" style="width:100%" onclick="kcLogout()">Logout</button>';
-  document.getElementById('profileEmail').textContent=user.email||'Google account';
-  document.getElementById('profileHandle').textContent='@'+displayName;
-  document.getElementById('profileName').textContent=displayName;
-  document.getElementById('creatorInput').value=displayName;
- }else{
-  window.kcCurrentUser=null;
-  loginBtn.textContent='Login';
-  profileButtons.innerHTML='<button class="primary" onclick="openAuthPanel()">Login / Sign Up</button>';
-  document.getElementById('profileEmail').textContent='ابھی لاگ اِن نہیں';
-  document.getElementById('profileHandle').textContent='@kingcobrix';
-  document.getElementById('profileName').textContent=myName;
+window.openComments=async id=>{
+ if(!signedIn())return;
+ activeCommentVideo=id;
+ $("commentList").innerHTML='<p class="muted">Loading comments…</p>';
+ $("commentError").textContent="";
+ showModal("commentModal");
+ try{
+   if(id.startsWith("local_")){$("commentList").innerHTML='<p class="muted">Comments for local previews are not saved online.</p>';return}
+   const snap=await getDocs(query(collection(db,"videos",id,"comments"),orderBy("createdAt","desc"),limit(100)));
+   const comments=[];
+   snap.forEach(d=>comments.push({id:d.id,...d.data()}));
+   $("commentList").innerHTML=comments.length?comments.map(c=>`<div class="comment-item"><strong>${esc(c.displayName||"Creator")}</strong><br>${esc(c.text||"")}</div>`).join(""):`<p class="muted">${t("noComments")}</p>`;
+ }catch(err){
+   $("commentList").innerHTML=`<p class="muted">${t("noComments")}</p>`;
+   $("commentError").textContent=t("commentsFailed");
  }
- window.kcUpdateAuthUI();
- updateProfile();
+};
+$("commentForm").onsubmit=async e=>{
+ e.preventDefault();
+ if(!signedIn()||!activeCommentVideo)return;
+ const text=$("commentInput").value.trim();if(!text)return;
+ if(activeCommentVideo.startsWith("local_")){$("commentError").textContent="Comments need an online video record.";return}
+ try{
+   await addDoc(collection(db,"videos",activeCommentVideo,"comments"),{
+     userId:currentUser.uid,displayName:myProfile?.displayName||currentUser.displayName||"Creator",
+     text,createdAt:serverTimestamp()
+   });
+   $("commentInput").value="";
+   await window.openComments(activeCommentVideo);
+   toast("Comment added.");
+ }catch(err){$("commentError").textContent="Could not post comment: "+err.message}
+};
+window.viewCreator=async uid=>{
+ if(!uid){toast("Creator profile unavailable.");return}
+ if(uid===currentUser?.uid){navigate("profile");return}
+ try{
+   const p=await loadUserProfile(uid);
+   const videos=allVideos.filter(v=>v.userId===uid);
+   const card=`<div class="profile-cover"></div><div class="profile-head">${avatarHTML({displayName:p.displayName||videos[0]?.displayName||"Creator",photoURL:p.photoURL||videos[0]?.photoURL})}<div style="padding-bottom:8px"><strong>${esc(p.displayName||videos[0]?.displayName||"Creator")}</strong><div class="creator-handle">@${esc(p.username||videos[0]?.username||"creator")}</div></div></div><div class="profile-bio">${esc(p.bio||t("bioEmpty"))}</div><div class="profile-stats"><div><strong>${videos.length}</strong><br><span>${t("videos")}</span></div><div><strong>${p.followersCount||0}</strong><br><span>${t("followers")}</span></div><div><strong>${p.followingCount||0}</strong><br><span>${t("following")}</span></div></div><div class="profile-tabs"><button class="active">▦ ${t("videos")}</button><button onclick="toggleFollow('${esc(uid)}')">${followed.has(uid)?t("followingBtn"):t("follow")}</button></div>${videos.length?`<div class="grid-videos" style="padding:10px">${videos.map(v=>`<div class="grid-tile"><video src="${esc(v.videoUrl)}" muted playsinline preload="metadata"></video><span>▶ ${fmt(v.likesCount||0)}</span></div>`).join("")}</div>`:emptyState("🎥",t("noProfileVideos"),"")}`;
+   const root=$("mainContent");root.innerHTML=`<div class="section-heading"><button class="secondary" onclick="navigate('home')">← Back</button><h2>${t("profileViewer")}</h2></div><div class="page-panel" style="padding:0;overflow:hidden">${card}</div>`;
+   currentPage="creator";window.scrollTo({top:0,behavior:"smooth"});
+ }catch(err){toast("Could not open creator profile.")}
+};
+$("googleLogin").onclick=async()=>{
+ $("authError").textContent="";
+ try{
+   const result=await signInWithPopup(auth,provider);
+   await afterLogin(result.user);
+ }catch(err){
+   console.error(err);
+   if(err.code==="auth/popup-blocked"){
+     try{await signInWithRedirect(auth,provider)}catch(e){$("authError").textContent=t("authFailed")+" "+e.message}
+   }else if(err.code==="auth/popup-closed-by-user"){
+     $("authError").textContent="Login window was closed. Please try again.";
+   }else{
+     $("authError").textContent=t("authFailed")+" "+(err.message||"");
+   }
+ }
+};
+try{const redirectResult=await getRedirectResult(auth);if(redirectResult?.user)await afterLogin(redirectResult.user)}catch(err){console.warn(err)}
+onAuthStateChanged(auth,async user=>{
+ if(user){
+   currentUser=user;
+   if(!myProfile)myProfile=await loadUserProfile(user.uid);
+   updateSide();
+   await loadVideos();
+ }else{
+   currentUser=null;myProfile=null;
+   updateSide();
+   if(currentPage==="profile")currentPage="home";
+   renderPage();
+ }
 });
+document.addEventListener("click",e=>{
+ const video=e.target.closest("video[data-playvideo]");
+ if(video){
+   // Native controls remain available. Clicking the actual video toggles playback.
+   if(e.target===video){
+     if(video.paused)video.play().catch(()=>{});else video.pause();
+   }
+ }
+});
+document.addEventListener("timeupdate",e=>{
+ const v=e.target;
+ if(v.tagName==="VIDEO"&&v.dataset.playvideo){
+   const bar=document.querySelector(`[data-progress="${CSS.escape(v.dataset.playvideo)}"]`);
+   if(bar&&v.duration)bar.style.width=(v.currentTime/v.duration*100)+"%";
+ }
+},true);
+
+applyLanguage();
+renderPage();
 </script>
 </body>
 </html>
